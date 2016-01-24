@@ -1,0 +1,17 @@
+{
+  "name": "gw2gearopt",
+  "description": "Calculate optimal gear based on defensive requests.",
+  "main": "backend/server.coffee",
+  "authors": [
+    "Katharine Cordes"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/katharinegillis/gw2gearoptimizer",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
