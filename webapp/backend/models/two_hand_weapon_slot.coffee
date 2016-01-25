@@ -9,15 +9,15 @@ modelFactory = (app, models) ->
 	Slot = models.Slot
 
 	class TwoHandWeaponSlot extends Slot
-		constructor: (stat_combo) ->
-			@available_stat_combos = StatCombinations.getWeaponAvailableStatCombinations()
+		constructor: (selected_stat_combos, stat_combo) ->
+			available_stat_combos = StatCombinations.getWeaponAvailableStatCombinations selected_stat_combos
 
-			super stat_combo
+			super available_stat_combos, stat_combo
 
 		getStats: ->
 			list = @getStatList()
 			stats = {}
-			if list.hasOwnPropery('major') and list.major.length is 1
+			if list.hasOwnProperty('major') and list.major.length is 1
 				stats[list.major[0]] = 251
 				stats[list.minor[0]] = 179
 				stats[list.minor[1]] = 179

@@ -7,12 +7,12 @@ modelFactory = (app, models) ->
 	GearSet = models.GearSet
 
 	class Population
-		constructor: (populationSize, initialize) ->
+		constructor: (character, populationSize, initialize) ->
 			@population = []
 
 			if (initialize)
 				for i in [0..populationSize]
-					new_gear_set = new GearSet()
+					new_gear_set = new GearSet character
 					@saveGearSet(i, new_gear_set)
 
 		saveGearSet: (index, gear_set) ->
@@ -22,7 +22,7 @@ modelFactory = (app, models) ->
 			@population[index]
 
 		getFittest: ->
-			fittest = population[0]
+			fittest = @population[0]
 
 			populationSize = @population.length
 			for i in [0..populationSize]

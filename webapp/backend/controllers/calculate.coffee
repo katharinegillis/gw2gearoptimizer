@@ -8,7 +8,45 @@ controllerFactory = (app) ->
 		index: (req, res) ->
 			params = req.params.params
 
-			console.log req.body
+			GA = app.get('models').GA
+			Population = app.get('models').Population
+
+			character =
+				two_weapons: false
+				base:
+					vitality: 1000
+					hp: 15922
+					toughness: 1000
+					power: 1000
+					precision: 1000
+				item_defense: 1211
+				min_survivability: 5001
+				max_survivability: 5500
+				primary_stat: 'power'
+				gear_for: 'hot'
+				healing: 10000
+				selected_stat_combos: [
+					'berserker'
+					'knight'
+					'cavalier'
+					'carrion'
+					'cleric'
+					'magi'
+					'assassin'
+				]
+
+			pop = new Population character, 1, true
+			console.log pop.getFittest()
+
+		#	// Initialize population
+        #Population pop = new Population(50, true);
+        #System.out.println("Initial distance: " + pop.getFittest().getDistance());
+
+        #// Evolve population for 100 generations
+        #pop = GA.evolvePopulation(pop);
+        #for (int i = 0; i < 100; i++) {
+        #    pop = GA.evolvePopulation(pop);
+        #}
 
 			res.json
 				survivability: '5001 (Durable)'

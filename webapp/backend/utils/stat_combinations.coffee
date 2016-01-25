@@ -5,163 +5,136 @@
 
 _ = require 'underscore'
 
-class StatCombinations
-	constructor: (selected_stat_combos) ->
-		@selected_stat_combos = selected_stat_combos
-		@selected_armour_stat_combos = null
-		@selected_weapon_stat_combos = null
-		@selected_amulet_stat_combos = null
-		@selected_ring_stat_combos = null
-		@selected_accessory_stat_combos = null
-		@selected_back_stat_combos = null
+StatCombinations =
+	getArmourAvailableStatCombinations: (selected_stat_combos) ->
+		all_armour_stat_combos = [
+			'berserker'
+			'zealot'
+			'soldier'
+			'valkyrie'
+			'rampager'
+			'assassin'
+			'knight'
+			'cavalier'
+			'nomad'
+			'settler'
+			'sentinel'
+			'shaman'
+			'sinister'
+			'carrion'
+			'rabid'
+			'dire'
+			'cleric'
+			'magi'
+			'apothecary'
+			'commander'
+			'marauder'
+			'vigilant'
+			'crusader'
+			'wanderer'
+			'viper'
+			'trailblazer'
+			'minstrel'
+		]
+		_.intersection(all_armour_stat_combos, selected_stat_combos)
 
-	getArmourAvailableStatCombinations: () ->
-		if @selected_armour_stat_combos is null
-			all_armour_stat_combos = [
-				'berserker'
-				'zealot'
-				'soldier'
-				'valkyrie'
-				'rampager'
-				'assassin'
-				'knight'
-				'cavalier'
-				'nomad'
-				'settler'
-				'sentinel'
-				'shaman'
-				'sinister'
-				'carrion'
-				'rabid'
-				'dire'
-				'cleric'
-				'magi'
-				'apothecary'
-				'commander'
-				'marauder'
-				'vigilant'
-				'crusader'
-				'wanderer'
-				'viper'
-				'trailblazer'
-				'minstrel'
-			]
-			@selected_armour_stat_combos = _.intersection(all_armour_stat_combos, @selected_stat_combos)
+	getWeaponAvailableStatCombinations: (selected_stat_combos) ->
+		all_weapon_stat_combos = [
+			'berserker'
+			'zealot'
+			'soldier'
+			'valkyrie'
+			'rampager'
+			'assassin'
+			'knight'
+			'cavalier'
+			'nomad'
+			'settler'
+			'sentinel'
+			'shaman'
+			'sinister'
+			'carrion'
+			'rabid'
+			'dire'
+			'cleric'
+			'magi'
+			'apothecary'
+			'commander'
+			'marauder'
+			'vigilant'
+			'crusader'
+			'wanderer'
+			'viper'
+			'trailblazer'
+			'minstrel'
+		]
+		_.intersection(all_weapon_stat_combos, selected_stat_combos)
 
-		@selected_armour_stat_combos
+	getAmuletAvailableStatCombinations: (selected_stat_combos) ->
+		all_amulet_stat_combos = [
+			'berserker'
+			'soldier'
+			'captain'
+			'rampager'
+			'knight'
+			'cavalier'
+			'rabid'
+			'sinister'
+			'cleric'
+			'apothecary'
+			'nomad'
+			'celestial'
+			'marauder'
+			'crusader'
+		]
+		_.intersection(all_amulet_stat_combos, selected_stat_combos)
 
-	getWeaponAvailableStatCombinations: () ->
-		if @selected_weapon_stat_combos is null
-			all_weapon_stat_combos = [
-				'berserker'
-				'zealot'
-				'soldier'
-				'valkyrie'
-				'rampager'
-				'assassin'
-				'knight'
-				'cavalier'
-				'nomad'
-				'settler'
-				'sentinel'
-				'shaman'
-				'sinister'
-				'carrion'
-				'rabid'
-				'dire'
-				'cleric'
-				'magi'
-				'apothecary'
-				'commander'
-				'marauder'
-				'vigilant'
-				'crusader'
-				'wanderer'
-				'viper'
-				'trailblazer'
-				'minstrel'
-			]
-			@selected_weapon_stat_combos = _.intersection(all_weapon_stat_combos, @selected_stat_combos)
+	getRingAvailableStatCombinations: (selected_stat_combos) ->
+		all_ring_stat_combos = [
+			'berserker'
+			'soldier'
+			'captain'
+			'rampager'
+			'knight'
+			'cavalier'
+			'nomads'
+			'rabid'
+			'cleric'
+			'apothecary'
+			'celestial'
+		]
+		_.intersection(all_ring_stat_combos, selected_stat_combos)
 
-		@selected_weapon_stat_combos
+	getAccessoryAvailableStatCombinations: (selected_stat_combos) ->
+		all_accessory_stat_combos = [
+			'berserker'
+			'soldier'
+			'captain'
+			'rampager'
+			'assassin'
+			'knight'
+			'cavalier'
+			'nomad'
+			'sentinel'
+			'rabid'
+			'carrion'
+			'sinister'
+			'cleric'
+			'magi'
+			'apothecary'
+			'celestial'
+		]
+		_.intersection(all_accessory_stat_combos, selected_stat_combos)
 
-	getAmuletAvailableStatCombinations: () ->
-		if @selected_jewelery_stat_combos is null
-			all_amulet_stat_combos = [
-				'berserker'
-				'soldier'
-				'captain'
-				'rampager'
-				'knight'
-				'cavalier'
-				'rabid'
-				'sinister'
-				'cleric'
-				'apothecary'
-				'nomad'
-				'celestial'
-				'marauder'
-				'crusader'
-			]
-			@selected_amulet_stat_combos = _.intersection(all_amulet_stat_combos, @selected_stat_combos)
-
-		@selected_amulet_stat_combos
-
-	getRingAvailableStatCombinations: () ->
-		if @selected_ring_stat_combos is null
-			all_ring_stat_combos = [
-				'berserker'
-				'soldier'
-				'captain'
-				'rampager'
-				'knight'
-				'cavalier'
-				'nomads'
-				'rabid'
-				'cleric'
-				'apothecary'
-				'celestial'
-			]
-			@selected_ring_stat_combos = _.intersection(all_ring_stat_combos, @selected_stat_combos)
-
-		@selected_ring_stat_combos
-
-	getAccessoryAvailableStatCombinations: () ->
-		if @selected_accessory_stat_combos is null
-			all_accessory_stat_combos = [
-				'berserker'
-				'soldier'
-				'captain'
-				'rampager'
-				'assassin'
-				'knight'
-				'cavalier'
-				'nomad'
-				'sentinel'
-				'rabid'
-				'carrion'
-				'sinister'
-				'cleric'
-				'magi'
-				'apothecary'
-				'celestial'
-			]
-			@selected_accessory_stat_combos = _.intersection(all_accessory_stat_combos, @selected_stat_combos)
-
-		@selected_accessory_stat_combos
-
-	getBackAvailableStatCombinations: () ->
-		if @selected_back_stat_combos is null
-			all_back_stat_combos = [
-				'berserker'
-				'soldier'
-				'cavalier'
-				'rabid'
-				'apothecary'
-			]
-			@selected_back_stat_combos = _.intersection(all_back_stat_combos, @selected_stat_combos)
-
-		@selected_back_stat_combos
+	getBackAvailableStatCombinations: (selected_stat_combos) ->
+		all_back_stat_combos = [
+			'berserker'
+			'soldier'
+			'cavalier'
+			'rabid'
+			'apothecary'
+		]
+		_.intersection(all_back_stat_combos, selected_stat_combos)
 
 	mergeStats: (stats1, stats2) ->
 		for stat, value in stats2

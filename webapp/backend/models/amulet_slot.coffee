@@ -9,10 +9,10 @@ modelFactory = (app, models) ->
 	Slot = models.Slot
 
 	class AmuletSlot extends Slot
-		constructor: (stat_combo) ->
-			@available_stat_combos = StatCombinations.getAmuletAvailableStatCombinations()
+		constructor: (selected_stat_combos, stat_combo) ->
+			available_stat_combos = StatCombinations.getAmuletAvailableStatCombinations selected_stat_combos
 
-			super stat_combo
+			super available_stat_combos, stat_combo
 
 	AmuletSlot
 

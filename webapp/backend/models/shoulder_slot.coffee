@@ -9,10 +9,10 @@ modelFactory = (app, models) ->
 	Slot = models.Slot
 
 	class ShoulderSlot extends Slot
-		constructor: (stat_combo) ->
-			@available_stat_combos = StatCombinations.getArmourAvailableStatCombinations()
+		constructor: (selected_stat_combos, stat_combo) ->
+			available_stat_combos = StatCombinations.getArmourAvailableStatCombinations selected_stat_combos
 
-			super stat_combo
+			super available_stat_combos, stat_combo
 
 		getStats: ->
 			list = @getStatList()
