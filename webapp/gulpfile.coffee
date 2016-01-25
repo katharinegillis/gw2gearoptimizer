@@ -39,6 +39,7 @@ dependencies = [
 	'randomstring'
 	'request'
 	'url'
+	'underscore'
 ]
 
 entry_point = 'frontend/main.cjsx'

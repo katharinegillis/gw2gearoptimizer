@@ -7,6 +7,7 @@
 express  = require 'express'
 fs       = require 'fs'
 join     = require('path').join
+Promise  = require 'bluebird'
 
 config   = require './config/config'
 
@@ -18,13 +19,18 @@ port = process.env.PORT or 3000
 require('./config/express')(app)
 
 # Bootstrap the models and store them in the server app.
-models = {}
-for file in fs.readdirSync(join(__dirname, 'models'))
-	if file.indexOf('.coffee') isnt -1
-		model = require(join(__dirname, 'models', file))(app, mongoose)
-		Promise.promisifyAll model.instance
-		models[model.name] = model.instance
-app.set 'models', models
+#models = {}
+#for file in fs.readdirSync(join(__dirname, 'models'))
+#	if file.indexOf('.coffee') isnt -1
+#		model = require(join(__dirname, 'models', file))(app)
+#		if not model.noPromisify
+#			Promise.promisifyAll model.instance
+#		
+#		models[model.name] = model.instance
+#app.set 'models', models
+
+#Bootstrap the models.
+require('./config/models')(app)
 
 # Bootstrap the routes.
 require('./config/routes')(app)

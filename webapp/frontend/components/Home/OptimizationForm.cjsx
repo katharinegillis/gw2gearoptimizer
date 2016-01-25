@@ -80,6 +80,7 @@ class OptimizationForm extends React.Component
 			berserker: 'Berserker (power, precision, ferocity)'
 			zealot: 'Zealot (power, precision, healing power)'
 			soldier: 'Soldier (power, toughness, vitality)'
+			captain: 'Captain (power, precision, toughness)'
 			valkyrie: 'Valkyrie (power, vitality, ferocity)'
 			rampager: 'Rampager (precision, power, condition damage)'
 			assassin: 'Assassin (precision, power, ferocity)'
