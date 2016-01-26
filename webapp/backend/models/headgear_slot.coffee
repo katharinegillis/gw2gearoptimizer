@@ -11,7 +11,6 @@ modelFactory = (app, models) ->
 	class HeadgearSlot extends Slot
 		constructor: (selected_stat_combos, stat_combo) ->
 			available_stat_combos = StatCombinations.getArmourAvailableStatCombinations selected_stat_combos
-			console.log available_stat_combos
 
 			super available_stat_combos, stat_combo
 

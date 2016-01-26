@@ -17,7 +17,7 @@ modelFactory = (app, models) ->
 		getStats: ->
 			list = @getStatList()
 			stats = {}
-			if list.hasOwnPropery('major') and list.major.length is 1
+			if list.hasOwnProperty('major') and list.major.length is 1
 				stats[list.major[0]] = 94
 				stats[list.minor[0]] = 67
 				stats[list.minor[1]] = 67

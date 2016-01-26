@@ -14,6 +14,18 @@ modelFactory = (app, models) ->
 
 			super available_stat_combos, stat_combo
 
+		getStats: ->
+			list = @getStatList()
+			stats = {}
+			if list.hasOwnProperty('major') and list.major.length is 1
+				stats[list.major[0]] = 110
+				stats[list.minor[0]] = 74
+				stats[list.minor[1]] = 74
+			else if not list.hasOwnProperty('major')
+				stats[stat] = 50 for stat in list.minor
+
+			stats
+
 	AccessorySlot
 
 module.exports = modelFactory

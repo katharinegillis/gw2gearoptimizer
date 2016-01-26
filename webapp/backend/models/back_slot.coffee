@@ -14,6 +14,16 @@ modelFactory = (app, models) ->
 
 			super available_stat_combos, stat_combo
 
+		getStats: ->
+			list = @getStatList()
+			stats = {}
+			if list.hasOwnProperty('major') and list.major.length is 1
+				stats[list.major[0]] = 63
+				stats[list.minor[0]] = 40
+				stats[list.minor[1]] = 40
+
+			stats
+
 	BackSlot
 
 module.exports = modelFactory

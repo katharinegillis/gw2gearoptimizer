@@ -137,7 +137,7 @@ StatCombinations =
 		_.intersection(all_back_stat_combos, selected_stat_combos)
 
 	mergeStats: (stats1, stats2) ->
-		for stat, value in stats2
+		for stat, value of stats2
 			if stats1.hasOwnProperty stat then stats1[stat] += value else stats1[stat] = value
 
 		stats1

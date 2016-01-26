@@ -15,7 +15,7 @@ controllerFactory = (app) ->
 				two_weapons: false
 				base:
 					vitality: 1000
-					hp: 15922
+					hp: 5922
 					toughness: 1000
 					power: 1000
 					precision: 1000
@@ -35,8 +35,16 @@ controllerFactory = (app) ->
 					'assassin'
 				]
 
-			pop = new Population character, 1, true
-			console.log pop.getFittest()
+			pop = new Population 50, true, character
+			console.log 'Initial fittest gear_set:'
+			console.log pop.getFittest().fitness
+
+			ga = new GA character
+			pop = ga.evolvePopulation pop
+			for i in [0...2]
+				pop = ga.evolvePopulation pop
+			console.log 'Final fittest gear_set:'
+			console.log pop.getFittest().fitness
 
 		#	// Initialize population
         #Population pop = new Population(50, true);
