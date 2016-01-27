@@ -18,17 +18,17 @@ defaults =
 	base_url: 'http://localdev.gw2gearopt.tichi.org'
 	logger:
 		transports: [
-			new winston.transports.Console colorize: true, level: 'debug'
+			new winston.transports.Console colorize: true, level: 'debug', prettyPrint: true
 			new winston.transports.File
 				filename: 'logs/error.log'
 				level: 'error'
 				name: 'error-file'
-				json: false
+				prettyPrint: true
 			new winston.transports.File
 				filename: 'logs/system.log'
 				level: 'warn'
 				name: 'system-file'
-				json: false
+				prettyPrint: true
 		]
 	cookie:
 		secret: process.env.COOKIE_SECRET

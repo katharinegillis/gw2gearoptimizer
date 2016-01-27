@@ -29,7 +29,6 @@ modelFactory = (app, models) ->
 			populationSize = @population.length
 			for i in [0...populationSize]
 				gear_set = @getGearSet i
-				console.log gear_set.getFitness()
 				if fittest.getFitness() < gear_set.getFitness()
 					fittest = gear_set
 

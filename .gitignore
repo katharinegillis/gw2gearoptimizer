@@ -15,3 +15,7 @@ webapp/public/js/*
 
 # Project files
 .idea
+
+# Log files
+*.log
+npm-debug.log.*

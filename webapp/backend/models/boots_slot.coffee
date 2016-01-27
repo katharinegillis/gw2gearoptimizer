@@ -9,10 +9,10 @@ modelFactory = (app, models) ->
 	Slot = models.Slot
 
 	class BootsSlot extends Slot
-		constructor: (selected_stat_combos, stat_combo) ->
+		constructor: (selected_stat_combos, stat_data) ->
 			available_stat_combos = StatCombinations.getArmourAvailableStatCombinations selected_stat_combos
 
-			super available_stat_combos, stat_combo
+			super available_stat_combos, stat_data
 
 		getStats: ->
 			list = @getStatList()
