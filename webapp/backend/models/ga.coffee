@@ -9,12 +9,13 @@ modelFactory = (app, models) ->
 
 	class GA
 		constructor: (character) ->
-			@mutationRate = 0.015;
-			@tournamentSize = 10;
+			@mutationRate = 0.1;
+			@tournamentSize = 5;
 			@elitism = true;
 			@character = character
 
 		evolvePopulation: (population) ->
+			console.log 'evolving population'
 			newPopulation = new Population population.getPopulationSize(), false, @character
 
 			elitismOffset = 0
@@ -36,36 +37,24 @@ modelFactory = (app, models) ->
 			newPopulation
 
 		crossover: (parent1, parent2) ->
-			[parent1_gear_data1, parent1_gear_data2] = parent1.getGearSetData()
-			[parent2_gear_data1, parent2_gear_data2] = parent2.getGearSetData()
+			valid = false
+			while not valid
+				[parent1_gear_data1, parent1_gear_data2, parent1_gear_data3] = parent1.getGearSetData()
+				[parent2_gear_data1, parent2_gear_data2, parent2_gear_data3] = parent2.getGearSetData()
 
-		crossover: (parent1, parent2) ->
-			gearSlots = [
-				'headgear'
-				'shoulders'
-				'chest'
-				'gloves'
-				'leggings'
-				'boots'
-				'weapon1'
-				'back'
-				'amulet'
-				'accessory1'
-				'accessory2'
-				'ring1'
-				'ring2'
-			]
+				mask1 = Math.floor Math.random() * 32
+				mask2 = Math.floor Math.random() * 32
+				mask3 = Math.floor Math.random() * 32
 
-			gearSlots.push 'weapon2' if @character.two_weapons
+				parent3_gear_data = [
+					parent1_gear_data1 & mask1 + parent2_gear_data1 & ~mask1
+					parent1_gear_data2 & mask2 + parent2_gear_data2 & ~mask2
+					parent1_gear_data3 & mask3 + parent2_gear_data3 & ~mask3
+				]
 
-			slots = {}
-			for slot in gearSlots
-				if Math.floor(Math.random() * 2) is 0
-					slots[slot] = parent1.getSlot slot
-				else
-					slots[slot] = parent2.getSlot slot
+				child = new GearSet @character, parent3_gear_data
+				valid = child.isValid()
 
-			child = new GearSet @character, slots
 			child
 
 		mutate: (gear_set) ->
@@ -88,7 +77,7 @@ modelFactory = (app, models) ->
 			gearSlots.push 'weapon2' if @character.two_weapons
 
 			for i in [0...gearSlots.length]
-				if Math.random < @mutationRate
+				if Math.random() < @mutationRate
 					slot = gear_set.getSlot gearSlots[i]
 					slot.randomizeStatCombo()
 					gear_set.setSlot gearSlots[i], slot
@@ -100,11 +89,8 @@ modelFactory = (app, models) ->
 
 			for i in [0...tournament.getPopulationSize()]
 				index = Math.floor(Math.random() * population.getPopulationSize())
-				console.log index
 				tournament.saveGearSet i, population.getGearSet(index)
 
-			console.log 'tournament:'
-			console.log tournament.getFittest().fitness
 			tournament.getFittest()
 
 	GA

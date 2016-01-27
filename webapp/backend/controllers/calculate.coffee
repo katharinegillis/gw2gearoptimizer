@@ -76,14 +76,21 @@ controllerFactory = (app) ->
 			for stat_combo, value of req.body.hot_stats
 				character.selected_stat_combos.push stat_combo if value
 
-			pop = new Population 100, true, character
+			#GearSet = app.get('models').GearSet
+			#individual = new GearSet character
+			#console.log individual.getGearSetData()
+
+			#ga = new GA character
+			#individual = ga.mutate individual
+			#console.log individual.getGearSetData()
+			#return
+
+			pop = new Population 50, true, character
 
 			ga = new GA character
 			pop = ga.evolvePopulation pop
-			for i in [0...10]
+			for i in [0...1000]
 				pop = ga.evolvePopulation pop
-				console.log 'generation:'
-				console.log pop.getFittest().fitness
 			result = pop.getFittest()
 
 			capitalize = (string) ->
@@ -96,21 +103,22 @@ controllerFactory = (app) ->
 					name: capitalize character.primary_stat
 					value: result.stats[character.primary_stat]
 				slots:
-					helm: capitalize result.getSlot('headgear').getStatCombo()
-					shoulders: capitalize result.getSlot('shoulders').getStatCombo()
-					chest: capitalize result.getSlot('chest').getStatCombo()
-					gloves: capitalize result.getSlot('gloves').getStatCombo()
-					leggings: capitalize result.getSlot('leggings').getStatCombo()
-					boots: capitalize result.getSlot('boots').getStatCombo()
-					weapon1: capitalize result.getSlot('weapon1').getStatCombo()
-					back: capitalize result.getSlot('back').getStatCombo()
-					amulet: capitalize result.getSlot('amulet').getStatCombo()
-					ring1: capitalize result.getSlot('ring1').getStatCombo()
-					ring2: capitalize result.getSlot('ring2').getStatCombo()
-					accessory1: capitalize result.getSlot('accessory1').getStatCombo()
-					accessory2: capitalize result.getSlot('accessory2').getStatCombo()
+					helm: capitalize result.getSlot('headgear').getStatComboName()
+					shoulders: capitalize result.getSlot('shoulders').getStatComboName()
+					chest: capitalize result.getSlot('chest').getStatComboName()
+					gloves: capitalize result.getSlot('gloves').getStatComboName()
+					leggings: capitalize result.getSlot('leggings').getStatComboName()
+					boots: capitalize result.getSlot('boots').getStatComboName()
+					weapon1: capitalize result.getSlot('weapon1').getStatComboName()
+					back: capitalize result.getSlot('back').getStatComboName()
+					amulet: capitalize result.getSlot('amulet').getStatComboName()
+					ring1: capitalize result.getSlot('ring1').getStatComboName()
+					ring2: capitalize result.getSlot('ring2').getStatComboName()
+					accessory1: capitalize result.getSlot('accessory1').getStatComboName()
+					accessory2: capitalize result.getSlot('accessory2').getStatComboName()
+				fitness: result.fitness
 
-			response.slots.weapon2 = capitalize result.getSlot('weapon2').getStatCombo() if req.body.weapon is '2'
+			response.slots.weapon2 = capitalize result.getSlot('weapon2').getStatComboName() if req.body.weapon is '2'
 
 			if response.survivability < 3500
 				response.survivability = '' + response.survivability + ' (Break on touch)'

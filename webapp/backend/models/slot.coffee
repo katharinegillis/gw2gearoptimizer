@@ -10,7 +10,7 @@ modelFactory = (app, models) ->
 		constructor: (available_stat_combos, stat_data) ->
 			available_stat_combos.sort()
 			@available_stat_combos = available_stat_combos
-			stat_data = Math.floor Math.random() * @available_stat_combos.length if stat_data >= @available_stat_combos.length
+			stat_data = Math.floor Math.random() * @available_stat_combos.length if stat_data is null or stat_data is undefined or stat_data >= @available_stat_combos.length
 			@stat_data = stat_data
 			if @available_stat_combos.length < 2
 				@stat_data_length = 1
@@ -34,7 +34,8 @@ modelFactory = (app, models) ->
 		randomizeStatCombo: ->
 			@stat_data = Math.floor Math.random() * @available_stat_combos.length
 
-		isValidStatCombo: (stat_data) ->
+		isValid: (stat_data) ->
+			stat_data = @stat_data if stat_data is null or stat_data is undefined
 			stat_data < @available_stat_combos.length
 
 		getStatData: ->
