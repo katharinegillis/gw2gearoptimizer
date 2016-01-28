@@ -37,7 +37,7 @@ class FormInputMultiCheckbox extends React.Component
 			{
 				for value, label of @props.options
 					<div className="checkbox" key={value}>
-						<label><input type="checkbox" value={value} name={@props.name} onChange={@onChange.bind this, value} /> {label}</label>
+						<label className={value}><input type="checkbox" value={value} name={@props.name} onChange={@onChange.bind this, value} /> {label}</label>
 					</div>
 			}
 		</div>

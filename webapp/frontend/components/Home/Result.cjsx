@@ -18,6 +18,7 @@ class Result extends React.Component
 				<div><strong>Survivability:</strong> {@props.result.survivability}</div>
 				<div><strong>Toughness/Vitality Ratio:</strong> {@props.result.toughness_vit_ratio}</div>
 				<div><strong>{@props.result.primary.name}:</strong> {@props.result.primary.value}</div>
+				<div><strong>{@props.result.secondary.name}:</strong> {@props.result.secondary.value}</div>
 				<div>&nbsp;</div>
 				<div><strong>Helm:</strong> {@props.result.slots.helm}</div>
 				<div><strong>Shoulders:</strong> {@props.result.slots.shoulders}</div>

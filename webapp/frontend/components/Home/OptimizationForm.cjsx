@@ -59,6 +59,15 @@ class OptimizationForm extends React.Component
 			concentration: 'Concentration'
 			expertise: 'Expertise'
 
+		secondary_stat_options =
+			power: 'Power'
+			ferocity: 'Ferocity'
+			condition_damage: 'Condition Damage'
+			precision: 'Precision'
+			healing_power: 'Healing Power'
+			concentration: 'Concentration'
+			expertise: 'Expertise'
+
 		weapon_options =
 			1: "Two-handed weapon"
 			2: "Main-hand and Off-hand weapons"
@@ -91,7 +100,7 @@ class OptimizationForm extends React.Component
 			sentinel: 'Sentinel (vitality, power, toughness)'
 			shaman: 'Shaman (vitality, condition damage, healing power)'
 			sinister: 'Sinister (condition damage, power, precision)'
-			carrior: 'Carrion (condition damage, power, vitality)'
+			carrion: 'Carrion (condition damage, power, vitality)'
 			rabid: 'Rabid (condition damage, precision, toughness)'
 			dire: 'Dire (condition damage, toughness, vitality)'
 			cleric: 'Cleric (healing power, power, toughness)'
@@ -116,6 +125,7 @@ class OptimizationForm extends React.Component
 							<FormInputSelect options={profession_options} label="Profession" onChange={@onFieldChange.bind this, 'profession'} name="profession" />
 							<FormInputNumber label="Healing before going down" onChange={@onFieldChange.bind this, 'healing'} name="healing" />
 							<FormInputSelect options={primary_stat_options} label="Primary Stat" onChange={@onFieldChange.bind this, 'primary_stat'} name="primary_stat" />
+							<FormInputSelect options={secondary_stat_options} label="Secondary Stat" onChange={@onFieldChange.bind this, 'secondary_stat'} name="secondary_stat" />
 							<FormInputSelect options={weapon_options} label="Weapon" onChange={@onFieldChange.bind this, 'weapon'} name="weapon" />
 							<FormInputSelect options={defensive_category_options} label="Defensive Category" onChange={@onFieldChange.bind this, 'defensive_category'} name="defensive_category" />
 							<FormInputSelect options={gear_for_options} label="Gear For" onChange={@onFieldChange.bind this, 'gear_for'} name="gear_for" />

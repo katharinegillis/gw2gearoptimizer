@@ -20,6 +20,7 @@ controllerFactory = (app) ->
 					power: 1000
 					precision: 1000
 				primary_stat: req.body.primary_stat
+				secondary_stat: req.body.secondary_stat
 				gear_for: req.body.gear_for
 				healing: parseInt req.body.healing
 				selected_stat_combos: []
@@ -96,6 +97,9 @@ controllerFactory = (app) ->
 				primary:
 					name: capitalize character.primary_stat
 					value: result.stats[character.primary_stat]
+				secondary:
+					name: capitalize character.secondary_stat
+					value: result.stats[character.secondary_stat]
 				slots:
 					helm: capitalize result.getSlot('headgear').getStatComboName()
 					shoulders: capitalize result.getSlot('shoulders').getStatComboName()

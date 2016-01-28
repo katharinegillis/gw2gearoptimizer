@@ -1,3 +1,7 @@
+@text-red: #990000;
+@text-dirty-green: #446600;
+@text-blue: #0099CC;
+
 body {
   line-height: 1.75;
 }
@@ -9,4 +13,16 @@ body {
 
 .form-group .checkbox {
   margin-left: 20px;
+}
+
+.berserker, .soldier, .captain, .valkyrie, .assassin, .knight, .cavalier, .sentinel, .commander, .marauder, .vigilant, .wanderer {
+	color: @text-red;
+}
+
+.zealot, .nomad, .settler, .shaman, .cleric, .magi, .apothecary, .crusader, .minstrel {
+	color: @text-blue;
+}
+
+.rampager, .sinister, .carrion, .rabid, .dire, .viper, .trailblazer {
+	color: @text-dirty-green;
 }

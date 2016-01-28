@@ -126,15 +126,15 @@ modelFactory = (app, models) ->
 				@stats = stats
 
 				@survivability = Math.floor(stats.hp * (@character.item_defense + stats.toughness) / 10000)
-				@fitness = 7500 if @character.min_survivability <= @survivability <= @character.max_survivability
+				@fitness = 10000 if @character.min_survivability <= @survivability <= @character.max_survivability
 
-				@fitness += stats[@character.primary_stat] if stats.hasOwnProperty(@character.primary_stat)
+				@fitness += stats[@character.primary_stat] * 2 if stats.hasOwnProperty(@character.primary_stat)
+				@fitness += stats[@character.secondary_stat] if stats.hasOwnProperty(@character.secondary_stat)
 
 				if @character.gear_for is 'core' then ratio = 0.9 else ratio = 0.7
 				@toughness_vit_ratio = ratio * (stats.hp + @character.healing) / (@character.item_defense + stats.toughness) / 10
-				#inverse_ratio = 1 / ((@toughness_vit_ratio - 1) * (@toughness_vit_ratio - 1))
 				inverse_ratio = 1 / Math.abs(@toughness_vit_ratio - 1)
-				@fitness += Math.min 100 * inverse_ratio, 1000
+				@fitness += Math.min 200 * inverse_ratio, 2000
 				@fitness = Math.floor @fitness
 
 			@fitness
