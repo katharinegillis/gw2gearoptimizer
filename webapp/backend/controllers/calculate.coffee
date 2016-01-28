@@ -76,20 +76,14 @@ controllerFactory = (app) ->
 			for stat_combo, value of req.body.hot_stats
 				character.selected_stat_combos.push stat_combo if value
 
-			#GearSet = app.get('models').GearSet
-			#individual = new GearSet character
-			#console.log individual.getGearSetData()
-
-			#ga = new GA character
-			#individual = ga.mutate individual
-			#console.log individual.getGearSetData()
-			#return
+			
+			endTime = Math.floor(new Date() / 1000) + 25
 
 			pop = new Population 50, true, character
 
 			ga = new GA character
 			pop = ga.evolvePopulation pop
-			for i in [0...1000]
+			while Math.floor(new Date() / 1000) < endTime
 				pop = ga.evolvePopulation pop
 			result = pop.getFittest()
 

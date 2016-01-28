@@ -1,7 +1,7 @@
 {
-  "name": "wishlist",
+  "name": "gw2gearoptimizer",
   "version": "1.0.0",
-  "description": "Allows users to share wishlists with each other.",
+  "description": "Optimizes gear for Guild Wars 2.",
   "main": "server.coffee",
   "scripts": {
     "start": "NODE_ENV=development nodemon --ignore webapp/public --ignore webapp/frontend -L backend/server.coffee",
@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/katharinegillis/wishlist"
+    "url": "git://github.com/katharinegillis/gw2gearopt"
   },
   "private": true,
   "dependencies": {

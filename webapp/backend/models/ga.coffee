@@ -15,7 +15,6 @@ modelFactory = (app, models) ->
 			@character = character
 
 		evolvePopulation: (population) ->
-			console.log 'evolving population'
 			newPopulation = new Population population.getPopulationSize(), false, @character
 
 			elitismOffset = 0
