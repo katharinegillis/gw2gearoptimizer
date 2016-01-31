@@ -56,8 +56,6 @@ class Result extends React.Component
 	render: ->
 		return <div></div> if Object.keys(@props.result).length is 0
 
-		console.log @props.result
-
 		<div className="panel panel-success result">
 			<div className="panel-heading">Result</div>
 			<div className="panel-body">
