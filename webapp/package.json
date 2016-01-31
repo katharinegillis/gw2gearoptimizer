@@ -1,6 +1,6 @@
 {
   "name": "gw2gearoptimizer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Optimizes gear for Guild Wars 2.",
   "main": "server.coffee",
   "scripts": {
