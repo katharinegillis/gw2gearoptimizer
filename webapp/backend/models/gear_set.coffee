@@ -125,9 +125,6 @@ modelFactory = (app, models) ->
 				stats.hp += stats.vitality * 10
 				@stats = stats
 
-				console.log @stats
-				console.log @character.secondary_stat
-
 				@survivability = Math.floor(stats.hp * (@character.item_defense + stats.toughness) / 10000)
 				@fitness = 10000 if @character.min_survivability <= @survivability <= @character.max_survivability
 
