@@ -1,0 +1,17 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	server_name localdev.wishlist.tichi.org;
+
+	# Serve the static files directly.
+	location ~ ^/(js/|css/|images/) {
+		root /home/vagrant/webapp/public;
+		access_log off;
+		expires max;
+	}
+
+	location / {
+		proxy_pass http://127.0.0.1:3000;
+	}
+}

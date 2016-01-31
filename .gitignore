@@ -1,0 +1,21 @@
+# Vagrant built files
+.vagrant
+
+# NodeJS built files
+webapp/node_modules
+
+# Bower built files
+webapp/bower_components
+
+# App built files
+webapp/public/css/*
+!webapp/public/css/empty
+webapp/public/js/*
+!webapp/public/js/empty
+
+# Project files
+.idea
+
+# Log files
+*.log
+npm-debug.log.*
