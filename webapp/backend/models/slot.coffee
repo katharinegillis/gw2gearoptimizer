@@ -7,7 +7,7 @@ StatCombinations = require '../utils/stat_combinations'
 
 modelFactory = (app, models) ->
 	class Slot
-		constructor: (available_stat_combos, stat_data) ->
+		constructor: (type, available_stat_combos, stat_data) ->
 			available_stat_combos.sort()
 			@available_stat_combos = available_stat_combos
 			stat_data = Math.floor Math.random() * @available_stat_combos.length if stat_data is null or stat_data is undefined or stat_data >= @available_stat_combos.length
@@ -24,6 +24,7 @@ modelFactory = (app, models) ->
 				@stat_data_length = 5
 			else
 				@stat_data_length = 6
+			@type = type
 
 		getStatComboName: ->
 			@available_stat_combos[@stat_data]

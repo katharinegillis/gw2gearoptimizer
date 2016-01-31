@@ -24,6 +24,7 @@ controllerFactory = (app) ->
 				gear_for: req.body.gear_for
 				healing: parseInt req.body.healing
 				selected_stat_combos: []
+				gear_level: req.body.gear_level
 
 			switch req.body.profession
 				when 'revenant', 'warrior', 'guardian'
@@ -61,7 +62,7 @@ controllerFactory = (app) ->
 				when 'tanky'
 					character.min_survivability = 5001
 					character.max_survivability = 5500
-				when 'built_to_lastl'
+				when 'built_to_last'
 					character.min_survivability = 5501
 					character.max_survivability = 6000
 				when 'moving_fortress'
@@ -71,10 +72,7 @@ controllerFactory = (app) ->
 					character.min_survivability = 0
 					character.max_survivability = 0
 
-			for stat_combo, value of req.body.core_stats
-				character.selected_stat_combos.push stat_combo if value
-
-			for stat_combo, value of req.body.hot_stats
+			for stat_combo, value of req.body.stats
 				character.selected_stat_combos.push stat_combo if value
 
 			
@@ -88,50 +86,60 @@ controllerFactory = (app) ->
 				pop = ga.evolvePopulation pop
 			result = pop.getFittest()
 
-			capitalize = (string) ->
-    			string.charAt(0).toUpperCase() + string.substring(1).toLowerCase()
-
 			response =
-				survivability: result.survivability
 				toughness_vit_ratio: result.toughness_vit_ratio
 				primary:
-					name: capitalize character.primary_stat
+					name: character.primary_stat
 					value: result.stats[character.primary_stat]
 				secondary:
-					name: capitalize character.secondary_stat
+					name: character.secondary_stat
 					value: result.stats[character.secondary_stat]
 				slots:
-					helm: capitalize result.getSlot('headgear').getStatComboName()
-					shoulders: capitalize result.getSlot('shoulders').getStatComboName()
-					chest: capitalize result.getSlot('chest').getStatComboName()
-					gloves: capitalize result.getSlot('gloves').getStatComboName()
-					leggings: capitalize result.getSlot('leggings').getStatComboName()
-					boots: capitalize result.getSlot('boots').getStatComboName()
-					weapon1: capitalize result.getSlot('weapon1').getStatComboName()
-					back: capitalize result.getSlot('back').getStatComboName()
-					amulet: capitalize result.getSlot('amulet').getStatComboName()
-					ring1: capitalize result.getSlot('ring1').getStatComboName()
-					ring2: capitalize result.getSlot('ring2').getStatComboName()
-					accessory1: capitalize result.getSlot('accessory1').getStatComboName()
-					accessory2: capitalize result.getSlot('accessory2').getStatComboName()
+					helm: result.getSlot('headgear').getStatComboName()
+					shoulders: result.getSlot('shoulders').getStatComboName()
+					chest: result.getSlot('chest').getStatComboName()
+					gloves: result.getSlot('gloves').getStatComboName()
+					leggings: result.getSlot('leggings').getStatComboName()
+					boots: result.getSlot('boots').getStatComboName()
+					weapon1: result.getSlot('weapon1').getStatComboName()
+					back: result.getSlot('back').getStatComboName()
+					amulet: result.getSlot('amulet').getStatComboName()
+					ring1: result.getSlot('ring1').getStatComboName()
+					ring2: result.getSlot('ring2').getStatComboName()
+					accessory1: result.getSlot('accessory1').getStatComboName()
+					accessory2: result.getSlot('accessory2').getStatComboName()
 				fitness: result.fitness
 
-			response.slots.weapon2 = capitalize result.getSlot('weapon2').getStatComboName() if req.body.weapon is '2'
+			response.slots.weapon2 = result.getSlot('weapon2').getStatComboName() if req.body.weapon is '2'
 
-			if response.survivability < 3500
-				response.survivability = '' + response.survivability + ' (Break on touch)'
-			else if 3501 < response.survivability < 4000
-				response.survivability = '' + response.survivability + ' (Fragile)'
-			else if 4001 < response.survivability < 4500
-				response.survivability = '' + response.survivability + ' (Middle Ground)'
-			else if 4501 < response.survivability < 5000
-				response.survivability = '' + response.survivability + ' (Durable)'
-			else if 5001 < response.survivability < 5500
-				response.survivability = '' + response.survivability + ' (Tanky)'
-			else if 5501 < response.survivability < 6000
-				response.survivability = '' + response.survivability + ' (Built To Last)'
+			if result.survivability < 3500
+				response.survivability =
+					name: 'break_on_touch'
+					value: result.survivability
+			else if 3501 < result.survivability < 4000
+				response.survivability =
+					name: 'fragile'
+					value: result.survivability
+			else if 4001 < result.survivability < 4500
+				response.survivability =
+					name: 'middle_ground'
+					value: result.survivability
+			else if 4501 < result.survivability < 5000
+				response.survivability =
+					name: 'durable'
+					value: result.survivability
+			else if 5001 < result.survivability < 5500
+				response.survivability =
+					name: 'tanky'
+					value: result.survivability
+			else if 5501 < result.survivability < 6000
+				response.survivability =
+					name: 'built_to_last'
+					value: result.survivability
 			else
-				response.survivability = '' + response.survivability + ' (Moving Fortress)'
+				response.survivability =
+					name: 'moving_fortress'
+					value: result.survivability
 
 			res.json response
 

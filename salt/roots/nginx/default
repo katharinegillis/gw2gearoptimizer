@@ -5,7 +5,7 @@ server {
 	server_name localdev.wishlist.tichi.org;
 
 	# Serve the static files directly.
-	location ~ ^/(js/|css/) {
+	location ~ ^/(js/|css/|images/) {
 		root /home/vagrant/webapp/public;
 		access_log off;
 		expires max;

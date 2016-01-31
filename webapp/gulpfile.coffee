@@ -40,6 +40,8 @@ dependencies = [
 	'request'
 	'url'
 	'underscore'
+	'jquery'
+	'bootstrap'
 ]
 
 entry_point = 'frontend/main.cjsx'
@@ -47,10 +49,7 @@ css_entry_point = 'frontend/less/main.less'
 
 # Compile the third-party JS libraries into a single file.
 gulp.task 'vendor', () ->
-	return gulp.src [
-		'bower_components/jquery/dist/jquery.js',
-		'bower_components/bootstrap/dist/js/bootstrap.js'
-	]
+	return gulp.src dependencies
 	.pipe concat('vendor.js')
 	.pipe gulpif(production, streamify(uglify(mangle: false)))
 	.pipe gulp.dest('public/js')
@@ -105,7 +104,7 @@ gulp.task 'browserify-watch', ['browserify-vendor'], () ->
 # Compile the vendor css.
 gulp.task 'vendor-styles', () ->
 	return gulp.src [
-		'bower_components/bootstrap/dist/css/bootstrap.css'
+		'node_modules/bootstrap/dist/css/bootstrap.css'
 	]
 	.pipe concat('vendor.css')
 	.pipe gulpif(production, cssmin())

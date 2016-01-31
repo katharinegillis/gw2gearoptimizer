@@ -9,25 +9,38 @@ modelFactory = (app, models) ->
 	Slot = models.Slot
 
 	class TwoHandWeaponSlot extends Slot
-		constructor: (selected_stat_combos, stat_data) ->
+		constructor: (type, selected_stat_combos, stat_data) ->
 			available_stat_combos = StatCombinations.getWeaponAvailableStatCombinations selected_stat_combos
 
-			super available_stat_combos, stat_data
+			super type, available_stat_combos, stat_data
 
 		getStats: ->
 			list = @getStatList()
 			stats = {}
-			if list.hasOwnProperty('major') and list.major.length is 1
-				stats[list.major[0]] = 251
-				stats[list.minor[0]] = 179
-				stats[list.minor[1]] = 179
-			else if not list.hasOwnProperty('major')
-				stats[stat] = 118 for stat in list.minor
+			if @type is 'ascended'
+				if list.hasOwnProperty('major') and list.major.length is 1
+					stats[list.major[0]] = 251
+					stats[list.minor[0]] = 179
+					stats[list.minor[1]] = 179
+				else if not list.hasOwnProperty('major')
+					stats[stat] = 118 for stat in list.minor
+				else
+					stats[list.major[0]] = 215
+					stats[list.major[1]] = 215
+					stats[list.minor[0]] = 118
+					stats[list.minor[1]] = 118
 			else
-				stats[list.major[0]] = 215
-				stats[list.major[1]] = 215
-				stats[list.minor[0]] = 118
-				stats[list.minor[1]] = 118
+				if list.hasOwnProperty('major') and list.major.length is 1
+					stats[list.major[0]] = 239
+					stats[list.minor[0]] = 171
+					stats[list.minor[1]] = 171
+				else if not list.hasOwnProperty('major')
+					stats[stat] = 113 for stat in list.minor
+				else
+					stats[list.major[0]] = 205
+					stats[list.major[1]] = 205
+					stats[list.minor[0]] = 113
+					stats[list.minor[1]] = 113
 
 			stats
 

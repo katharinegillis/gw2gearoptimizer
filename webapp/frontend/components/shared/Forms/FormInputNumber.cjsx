@@ -17,10 +17,14 @@ class FormInputNumber extends React.Component
 
 	render: ->
 		id = @props.name + '_' + randomstring.generate(5)
+		if @props.error isnt null and @props.error isnt undefined and @props.error isnt '' then errorClass = 'has-error' else errorClass = ''
 
-		<div className="form-group">
+		<div className="form-group #{errorClass}">
 			<label htmlFor={id}>{@props.label}</label>
 			<input type="number" className="form-control" name={@props.name} id={id} onChange={@props.onChange} />
+			{
+				<span className="help-block">{@props.error}</span> if errorClass isnt ''
+			}
 		</div>
 
 module.exports = FormInputNumber
