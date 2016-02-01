@@ -4,7 +4,6 @@
 # @brief  Renders a text input on the form.
 
 React  = require 'react'
-randomstring = require 'randomstring'
 
 class FormInputNumber extends React.Component
 	constructor: (props) ->
@@ -16,7 +15,10 @@ class FormInputNumber extends React.Component
 		name: React.PropTypes.string.isRequired
 
 	render: ->
-		id = @props.name + '_' + randomstring.generate(5)
+		randomString = []
+		possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
+		randomString.push possible.charAt(Math.random() * possible.length) for i in [0..5]
+		id = @props.name + '_' + randomString.join('')
 		if @props.error isnt null and @props.error isnt undefined and @props.error isnt '' then errorClass = 'has-error' else errorClass = ''
 
 		<div className="form-group #{errorClass}">

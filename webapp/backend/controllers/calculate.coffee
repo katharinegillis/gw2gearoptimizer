@@ -6,10 +6,11 @@
 controllerFactory = (app) ->
 	controller =
 		index: (req, res) ->
-			params = req.params.params
-
 			GA = app.get('models').GA
 			Population = app.get('models').Population
+
+			if typeof req.body is 'string'
+				req.body = JSON.parse req.body
 
 			character =
 				profession: req.body.profession

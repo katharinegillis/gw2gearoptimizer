@@ -28,20 +28,15 @@ environment = process.env.NODE_ENV or 'development'
 production = environment is 'production'
 
 dependencies = [
-	'react'
-	'react-router'
-	'react-dom'
-	'events'
-	'object-assign'
-	'flux'
-	'keymirror'
-	'bluebird'
-	'randomstring'
-	'request'
-	'url'
-	'underscore'
-	'jquery'
-	'bootstrap'
+	'react' # 265 KB minified
+	'react-router' #369 KB minified
+	'react-dom' # 252 KB minified
+	'events' # 5 KB minified
+	'object-assign' # 1 KB minified
+	'flux' # 5 KB minified
+	'underscore' # 26 KB minified
+	'jquery' # 130 KB minified
+	'bootstrap' # 47 KB minified
 ]
 
 entry_point = 'frontend/main.cjsx'

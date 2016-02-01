@@ -3,21 +3,18 @@
 # @date   1/23/16
 # @brief  Handles the interaction between the server and the client for data.
 
-Request = require 'request'
-Url     = require 'url'
+$   = require 'jquery'
 
 module.exports =
 	calculate: (params, callback) ->
-		Request.post
-			url: Url.resolve process.env.BASE_URL, '/api/calculate'
-			json: params
-		, (error, response, body) ->
-			if not error and response.statusCode is 200
-				callback null, body
-			else
-				if not error
-					error =
-						statusCode: response.statusCode
-						body: body
-
+		$.ajax {
+			url: process.env.BASE_URL + '/api/calculate'
+			data: JSON.stringify params
+			type: 'POST'
+			contentType: 'application/json'
+			dataType: 'json'
+		}
+			.done (result) ->
+				callback null, result
+			.fail (error) ->
 				callback error, null

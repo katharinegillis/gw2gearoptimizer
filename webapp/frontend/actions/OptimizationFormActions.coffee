@@ -6,18 +6,16 @@
 AppDispatcher                 = require '../dispatcher/AppDispatcher.coffee'
 OptimizationFormConstants     = require '../constants/OptimizationFormConstants.coffee'
 CalculationAPI                = require '../api/CalculationAPI.coffee'
-Promise                       = require 'bluebird'
 OptimizationFormServerActions = require './OptimizationFormServerActions.coffee'
-
-Promise.promisifyAll CalculationAPI
 
 OptimizationFormActions =
 	optimize: (params) ->
 		AppDispatcher.dispatch action_type: OptimizationFormConstants.OPTIMIZE
-		CalculationAPI.calculateAsync params
-			.then (result) ->
-				OptimizationFormServerActions.receiveOptimizeResult result
-			.catch (error) ->
+		CalculationAPI.calculate params, (error, result) ->
+			if error isnt undefined and error isnt null and error isnt ''
 				console.log error
+				return
+
+			OptimizationFormServerActions.receiveOptimizeResult result
 
 module.exports = OptimizationFormActions
