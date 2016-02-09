@@ -7,6 +7,7 @@
 join    = require('path').join
 winston = require 'winston'
 extend  = require 'extend'
+pjson   = require '../../package.json'
 
 # Get the environment configuration based on the defined environment.
 env = process.env.NODE_ENV or 'development'
@@ -37,6 +38,7 @@ defaults =
 	db:
 		name: 'mongodb://localhost/wishlist_dev'
 		options: {}
+	version: pjson.version
 
 config = extend true, defaults, env_config
 

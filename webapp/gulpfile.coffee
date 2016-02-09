@@ -67,6 +67,7 @@ gulp.task 'browserify', ['browserify-vendor'], () ->
 			_: 'purge'
 			NODE_ENV: environment
 			BASE_URL: config.base_url
+			VERSION: config.version
 		)
 		.bundle()
 		.pipe source('bundle.js')
@@ -92,6 +93,7 @@ gulp.task 'browserify-watch', ['browserify-vendor'], () ->
 		_: 'purge'
 		NODE_ENV: environment
 		BASE_URL: config.base_url
+		VERSION: config.version
 	)
 	bundler.on 'update', rebundle
 	return rebundle()
