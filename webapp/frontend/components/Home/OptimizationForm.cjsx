@@ -8,13 +8,13 @@ FormInputSelect         = require '../shared/Forms/FormInputSelect.cjsx'
 FormInputNumber         = require '../shared/Forms/FormInputNumber.cjsx'
 FormInputMultiCheckbox  = require '../shared/Forms/FormInputMultiCheckbox.cjsx'
 OptimizationFormActions = require '../../actions/OptimizationFormActions.coffee'
-OptimizationFormStore   = require '../../stores/OptimizationFormStore.coffee'
+ResultStore             = require '../../stores/ResultStore.coffee'
 Result                  = require './Result.cjsx'
 _                       = require 'underscore'
 $                       = require 'jquery'
 
 getResultState = () ->
-	result: OptimizationFormStore.getResult()
+	result: ResultStore.getResult()
 	processing: false
 
 class OptimizationForm extends React.Component
@@ -27,10 +27,10 @@ class OptimizationForm extends React.Component
 			processing: false
 
 	componentDidMount: ->
-		OptimizationFormStore.addChangeListener @onChange
+		ResultStore.addChangeListener @onChange
 
 	componentWillUnmount: ->
-		OptimizationFormStore.removeChangeListener @onChange
+		ResultStore.removeChangeListener @onChange
 
 	onFieldChange: (field, event) ->
 		newState = @state
@@ -38,6 +38,7 @@ class OptimizationForm extends React.Component
 		@setState newState
 
 	onChange: =>
+		console.log 'blah'
 		@setState getResultState(), () ->
 			params =
 				scrollTop: $('.result').offset().top

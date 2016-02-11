@@ -3,10 +3,10 @@
 # @date   1/23/16
 # @brief  Handles the client-requested actions for the Optimization Form.
 
-AppDispatcher                 = require '../dispatcher/AppDispatcher.coffee'
-OptimizationFormConstants     = require '../constants/OptimizationFormConstants.coffee'
-CalculationAPI                = require '../api/CalculationAPI.coffee'
-OptimizationFormServerActions = require './OptimizationFormServerActions.coffee'
+AppDispatcher             = require '../dispatcher/AppDispatcher.coffee'
+OptimizationFormConstants = require '../constants/OptimizationFormConstants.coffee'
+CalculationAPI            = require '../api/CalculationAPI.coffee'
+ResultServerActions       = require './ResultServerActions.coffee'
 
 OptimizationFormActions =
 	optimize: (params) ->
@@ -16,6 +16,6 @@ OptimizationFormActions =
 				console.log error
 				return
 
-			OptimizationFormServerActions.receiveOptimizeResult result
+			ResultServerActions.receiveResult result
 
 module.exports = OptimizationFormActions
