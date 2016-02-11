@@ -6,8 +6,31 @@
 React            = require 'react'
 OptimizationForm = require './OptimizationForm.cjsx'
 BootstrapModal   = require '../shared/Bootstrap/BootstrapModal.cjsx'
+Result           = require './Result.cjsx'
+ResultStore      = require '../../stores/ResultStore.coffee'
+$                = require 'jquery'
+
+getHomeState = () ->
+	result: ResultStore.getResult()
 
 class Home extends React.Component
+	constructor: (props) ->
+		super props
+		@state =
+			result: {}
+
+	componentDidMount: ->
+		ResultStore.addChangeListener @onChange
+
+	componentWillUnmount: ->
+		ResultStore.removeChangeListener @onChange
+
+	onChange: =>
+		@setState getHomeState(), () ->
+			params =
+				scrollTop: $('.result').offset().top - 70
+			$('html, body').animate params, 1000
+
 	onClick: =>
 		@refs.modal.show()
 
@@ -69,6 +92,11 @@ class Home extends React.Component
 				<div className="row">
 					<div className="col-md-12">
 						<OptimizationForm />
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-12">
+						<Result result={@state.result} />
 					</div>
 				</div>
 			</div>

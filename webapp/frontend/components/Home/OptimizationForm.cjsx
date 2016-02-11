@@ -11,20 +11,19 @@ OptimizationFormActions = require '../../actions/OptimizationFormActions.coffee'
 ResultStore             = require '../../stores/ResultStore.coffee'
 Result                  = require './Result.cjsx'
 _                       = require 'underscore'
-$                       = require 'jquery'
-
-getResultState = () ->
-	result: ResultStore.getResult()
-	processing: false
 
 class OptimizationForm extends React.Component
 	constructor: (props) ->
 		super props
 		@state =
 			inputs: {}
-			result: {}
 			errors: {}
 			processing: false
+
+	onFieldChange: (field, event) ->
+		newState = @state
+		newState.inputs[field] = event.target.value
+		@setState newState
 
 	componentDidMount: ->
 		ResultStore.addChangeListener @onChange
@@ -32,17 +31,8 @@ class OptimizationForm extends React.Component
 	componentWillUnmount: ->
 		ResultStore.removeChangeListener @onChange
 
-	onFieldChange: (field, event) ->
-		newState = @state
-		newState.inputs[field] = event.target.value
-		@setState newState
-
 	onChange: =>
-		console.log 'blah'
-		@setState getResultState(), () ->
-			params =
-				scrollTop: $('.result').offset().top
-			$('html, body').animate params, 1000
+		@setState processing: false
 
 	onClick: =>
 		if @isValid()
@@ -204,11 +194,6 @@ class OptimizationForm extends React.Component
 							<div className="clearfix"></div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div className="row">
-				<div className="col-md-12">
-					<Result result={@state.result} />
 				</div>
 			</div>
 		</div>
