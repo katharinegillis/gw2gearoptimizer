@@ -10,12 +10,14 @@ routes_config = (app) ->
 	# Bootstrap the controllers.
 	index = require('../controllers/index')(app)
 	calculate = require('../controllers/calculate')(app)
-	
+	slot = require('../controllers/slot')(app)
+
 	# Main routes.
 	app.get '/', index.index
 
 	# API routes.
 	app.post '/api/calculate', calculate.index
+	app.get  '/api/slot/availableCombos', slot.availableCombos
 
 	# Error routes.
 	app.use express_winston.errorLogger(winstonInstance: app.get('logger'))
