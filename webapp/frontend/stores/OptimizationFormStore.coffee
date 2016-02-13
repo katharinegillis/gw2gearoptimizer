@@ -38,7 +38,7 @@ _data =
 			healing_power: 'Healing Power'
 			concentration: 'Concentration'
 			expertise: 'Expertise'
-		weapon:
+		num_weapons:
 			1: "Two-handed weapon"
 			2: "Main-hand and Off-hand weapons"
 		defensive_category:

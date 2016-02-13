@@ -14,7 +14,7 @@ controllerFactory = (app) ->
 
 			character =
 				profession: req.body.profession
-				two_weapons: if req.body.weapon is '2' then true else false
+				two_weapons: if req.body.num_weapons is '2' then true else false
 				base:
 					vitality: 1000
 					toughness: 1000
@@ -76,7 +76,23 @@ controllerFactory = (app) ->
 			for stat_combo, value of req.body.stats
 				character.selected_stat_combos.push stat_combo if value
 
-			
+			console.log req.body.headgear
+
+			if req.body.headgear isnt undefined and req.body.headgear isnt null and req.body.headgear isnt '' then character.headgear = [req.body.headgear] else character.headgear = character.selected_stat_combos
+			if req.body.shoulders isnt undefined and req.body.shoulders isnt null and req.body.shoulders isnt '' then character.shoulders = [req.body.shoulders] else character.shoulders = character.selected_stat_combos
+			if req.body.chest isnt undefined and req.body.chest isnt null and req.body.chest isnt '' then character.chest = [req.body.chest] else character.chest = character.selected_stat_combos
+			if req.body.gloves isnt undefined and req.body.gloves isnt null and req.body.gloves isnt '' then character.gloves = [req.body.gloves] else character.gloves = character.selected_stat_combos
+			if req.body.leggings isnt undefined and req.body.leggins isnt null and req.body.leggings isnt '' then character.leggings = [req.body.leggings] else character.leggings = character.selected_stat_combos
+			if req.body.boots isnt undefined and req.body.boots isnt null and req.body.boots isnt '' then character.boots = [req.body.boots] else character.boots = character.selected_stat_combos
+			if req.body.back isnt undefined and req.body.back isnt null and req.body.back isnt '' then character.back = [req.body.back] else character.back = character.selected_stat_combos
+			if req.body.amulet isnt undefined and req.body.amulet isnt null and req.body.amulet isnt '' then character.amulet = [req.body.amulet] else character.amulet = character.selected_stat_combos
+			if req.body.ring1 isnt undefined and req.body.ring1 isnt null and req.body.ring1 isnt '' then character.ring1 = [req.body.ring1] else character.ring1 = character.selected_stat_combos
+			if req.body.ring2 isnt undefined and req.body.ring2 isnt null and req.body.ring2 isnt '' then character.ring2 = [req.body.ring2] else character.ring2 = character.selected_stat_combos
+			if req.body.accessory1 isnt undefined and req.body.accessory1 isnt null and req.body.accessory1 isnt '' then character.accessory1 = [req.body.accessory1] else character.accessory1 = character.selected_stat_combos
+			if req.body.accessory2 isnt undefined and req.body.accessory2 isnt null and req.body.accessory2 isnt '' then character.accessory2 = [req.body.accessory2] else character.accessory2 = character.selected_stat_combos
+			if req.body.weapon1 isnt undefined and req.body.weapon1 isnt null and req.body.weapon1 isnt '' then character.weapon1 = [req.body.weapon1] else character.weapon1 = character.selected_stat_combos
+			if req.body.weapon2 isnt undefined and req.body.weapon2 isnt null and req.body.weapon2 isnt '' then character.weapon2 = [req.body.weapon2] else character.weapon2 = character.selected_stat_combos
+
 			endTime = Math.floor(new Date() / 1000) + 25
 
 			pop = new Population 50, true, character
@@ -111,7 +127,7 @@ controllerFactory = (app) ->
 					accessory2: result.getSlot('accessory2').getStatComboName()
 				fitness: result.fitness
 
-			response.slots.weapon2 = result.getSlot('weapon2').getStatComboName() if req.body.weapon is '2'
+			response.slots.weapon2 = result.getSlot('weapon2').getStatComboName() if req.body.num_weapons is '2'
 
 			if result.survivability < 3500
 				response.survivability =

@@ -12,6 +12,7 @@ StatAPI                       = require '../api/StatAPI.coffee'
 
 OptimizationFormActions =
 	optimize: (params) ->
+		console.log params
 		AppDispatcher.dispatch action_type: OptimizationFormConstants.OPTIMIZE
 		CalculationAPI.calculate params, (error, result) ->
 			if error isnt undefined and error isnt null and error isnt ''

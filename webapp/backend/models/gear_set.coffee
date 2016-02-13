@@ -31,84 +31,84 @@ modelFactory = (app, models) ->
 				# must convert to 3 integers, max 32 bits each.
 				[gear_set_data1, gear_set_data2, gear_set_data3] = gear_set_data
 
-				@gear.leggings = new LeggingsSlot @character.gear_level, @character.selected_stat_combos
+				@gear.leggings = new LeggingsSlot @character.gear_level, @character.leggings
 				@gear.leggings.setStatData gear_set_data1 & @gear.leggings.getStatDataMask()
 				gear_set_data1 = gear_set_data1 >> @gear.leggings.getStatDataLength()
 
-				@gear.gloves = new GlovesSlot @character.gear_level, @character.selected_stat_combos
+				@gear.gloves = new GlovesSlot @character.gear_level, @character.gloves
 				@gear.gloves.setStatData gear_set_data1 & @gear.gloves.getStatDataMask()
 				gear_set_data1 = gear_set_data1 >> @gear.gloves.getStatDataLength()
 
-				@gear.chest = new ChestSlot @character.gear_level, @character.selected_stat_combos
+				@gear.chest = new ChestSlot @character.gear_level, @character.chest
 				@gear.chest.setStatData gear_set_data1 & @gear.chest.getStatDataMask()
 				gear_set_data1 = gear_set_data1 >> @gear.chest.getStatDataLength()
 
-				@gear.shoulders = new ShoulderSlot @character.gear_level, @character.selected_stat_combos
+				@gear.shoulders = new ShoulderSlot @character.gear_level, @character.shoulders
 				@gear.shoulders.setStatData gear_set_data1 & @gear.shoulders.getStatDataMask()
 				gear_set_data1 = gear_set_data1 >> @gear.shoulders.getStatDataLength()
 
-				@gear.headgear = new HeadgearSlot @character.gear_level, @character.selected_stat_combos
+				@gear.headgear = new HeadgearSlot @character.gear_level, @character.headgear
 				@gear.headgear.setStatData gear_set_data1 & @gear.headgear.getStatDataMask()
 
 				if @character.two_weapons
-					@gear.weapon2 = new OneHandWeaponSlot @character.gear_level, @character.selected_stat_combos
+					@gear.weapon2 = new OneHandWeaponSlot @character.gear_level, @character.weapon2
 					@gear.weapon2.setStatData gear_set_data2 & @gear.weapon2.getStatDataMask()
 					gear_set_data2 = gear_set_data2 >> @gear.weapon2.getStatDataLength()
 
 				if @character.two_weapons
-					@gear.weapon1 = new OneHandWeaponSlot @character.gear_level, @character.selected_stat_combos
+					@gear.weapon1 = new OneHandWeaponSlot @character.gear_level, @character.weapon1
 				else
-					@gear.weapon1 = new TwoHandWeaponSlot @character.gear_level, @character.selected_stat_combos
+					@gear.weapon1 = new TwoHandWeaponSlot @character.gear_level, @character.weapon1
 
 				@gear.weapon1.setStatData gear_set_data2 & @gear.weapon1.getStatDataMask()
 				gear_set_data2 = gear_set_data2 >> @gear.weapon1.getStatDataLength()
 
-				@gear.back = new BackSlot @character.gear_level, @character.selected_stat_combos
+				@gear.back = new BackSlot @character.gear_level, @character.back
 				@gear.back.setStatData gear_set_data2 & @gear.back.getStatDataMask()
 				gear_set_data2 = gear_set_data2 >> @gear.back.getStatDataLength()
 
-				@gear.boots = new BootsSlot @character.gear_level, @character.selected_stat_combos
+				@gear.boots = new BootsSlot @character.gear_level, @character.boots
 				@gear.boots.setStatData gear_set_data2 & @gear.boots.getStatDataMask()
 
-				@gear.accessory2 = new AccessorySlot @character.gear_level, @character.selected_stat_combos
+				@gear.accessory2 = new AccessorySlot @character.gear_level, @character.accessory2
 				@gear.accessory2.setStatData gear_set_data3 & @gear.accessory2.getStatDataMask()
 				gear_set_data3 = gear_set_data3 >> @gear.accessory2.getStatDataLength()
 
-				@gear.accessory1 = new AccessorySlot @character.gear_level, @character.selected_stat_combos
+				@gear.accessory1 = new AccessorySlot @character.gear_level, @character.accessory1
 				@gear.accessory1.setStatData gear_set_data3 & @gear.accessory1.getStatDataMask()
 				gear_set_data3 = gear_set_data3 >> @gear.accessory1.getStatDataLength()
 
-				@gear.ring2 = new RingSlot @character.gear_level, @character.selected_stat_combos
+				@gear.ring2 = new RingSlot @character.gear_level, @character.ring2
 				@gear.ring2.setStatData gear_set_data3 & @gear.ring2.getStatDataMask()
 				gear_set_data3 = gear_set_data3 >> @gear.ring2.getStatDataLength()
 
-				@gear.ring1 = new RingSlot @character.gear_level, @character.selected_stat_combos
+				@gear.ring1 = new RingSlot @character.gear_level, @character.ring1
 				@gear.ring1.setStatData gear_set_data3 & @gear.ring1.getStatDataMask()
 				gear_set_data3 = gear_set_data3 >> @gear.ring1.getStatDataLength()
 
-				@gear.amulet = new AmuletSlot @character.gear_level, @character.selected_stat_combos
+				@gear.amulet = new AmuletSlot @character.gear_level, @character.amulet
 				@gear.amulet.setStatData gear_set_data3 & @gear.amulet.getStatDataMask()
 
 			else
-				@gear.headgear = new HeadgearSlot @character.gear_level, @character.selected_stat_combos
-				@gear.shoulders = new ShoulderSlot @character.gear_level, @character.selected_stat_combos
-				@gear.chest = new ChestSlot @character.gear_level, @character.selected_stat_combos
-				@gear.gloves = new GlovesSlot @character.gear_level, @character.selected_stat_combos
-				@gear.leggings = new LeggingsSlot @character.gear_level, @character.selected_stat_combos
-				@gear.boots = new BootsSlot @character.gear_level, @character.selected_stat_combos
+				@gear.headgear = new HeadgearSlot @character.gear_level, @character.headgear
+				@gear.shoulders = new ShoulderSlot @character.gear_level, @character.shoulders
+				@gear.chest = new ChestSlot @character.gear_level, @character.chest
+				@gear.gloves = new GlovesSlot @character.gear_level, @character.gloves
+				@gear.leggings = new LeggingsSlot @character.gear_level, @character.leggings
+				@gear.boots = new BootsSlot @character.gear_level, @character.boots
 
 				if @character.two_weapons
-					@gear.weapon1 = new OneHandWeaponSlot @character.gear_level, @character.selected_stat_combos
-					@gear.weapon2 = new OneHandWeaponSlot @character.gear_level, @character.selected_stat_combos
+					@gear.weapon1 = new OneHandWeaponSlot @character.gear_level, @character.weapon1
+					@gear.weapon2 = new OneHandWeaponSlot @character.gear_level, @character.weapon2
 				else
-					@gear.weapon1 = new TwoHandWeaponSlot @character.gear_level, @character.selected_stat_combos
+					@gear.weapon1 = new TwoHandWeaponSlot @character.gear_level, @character.weapon1
 
-				@gear.back = new BackSlot @character.gear_level, @character.selected_stat_combos
-				@gear.accessory1 = new AccessorySlot @character.gear_level, @character.selected_stat_combos
-				@gear.accessory2 = new AccessorySlot @character.gear_level, @character.selected_stat_combos
-				@gear.amulet = new AmuletSlot @character.gear_level, @character.selected_stat_combos
-				@gear.ring1 = new RingSlot @character.gear_level, @character.selected_stat_combos
-				@gear.ring2 = new RingSlot @character.gear_level, @character.selected_stat_combos
+				@gear.back = new BackSlot @character.gear_level, @character.back
+				@gear.accessory1 = new AccessorySlot @character.gear_level, @character.accessory1
+				@gear.accessory2 = new AccessorySlot @character.gear_level, @character.accessory2
+				@gear.amulet = new AmuletSlot @character.gear_level, @character.amulet
+				@gear.ring1 = new RingSlot @character.gear_level, @character.ring1
+				@gear.ring2 = new RingSlot @character.gear_level, @character.ring2
 
 		getSlot: (index) ->
 			@gear[index]

@@ -27,6 +27,8 @@ class OptimizationForm extends React.Component
 			processing: false
 
 	onFieldChange: (field, event) ->
+		console.log field
+		console.log event.target.value
 		newState = @state
 		newState.inputs[field] = event.target.value
 		@setState newState, () ->
@@ -65,7 +67,7 @@ class OptimizationForm extends React.Component
 		errors.profession = 'Profession is required.' if not state.inputs.hasOwnProperty('profession') or state.inputs.profession is null or state.inputs.profession is ''
 		errors.healing = 'Healing before going down is required.' if not state.inputs.hasOwnProperty('healing') or state.inputs.healing is null or state.inputs.healing is ''
 		errors.primary_stat = 'Primary Stat is required.' if not state.inputs.hasOwnProperty('primary_stat') or state.inputs.primary_stat is null or state.inputs.primary_stat is ''
-		errors.weapon = 'Weapon is required.' if not state.inputs.hasOwnProperty('weapon') or state.inputs.weapon is null or state.inputs.weapon is ''
+		errors.num_weapons = 'Weapon is required.' if not state.inputs.hasOwnProperty('num_weapons') or state.inputs.num_weapons is null or state.inputs.num_weapons is ''
 		errors.defensive_category = 'Defensive Category is required.' if not state.inputs.hasOwnProperty('defensive_category') or state.inputs.defensive_category is null or state.inputs.defensive_category is ''
 		errors.gear_for = 'Gear For is required.' if not state.inputs.hasOwnProperty('gear_for') or state.inputs.gear_for is null or state.inputs.gear_for is ''
 		errors.stats = 'Pick at least one stat combination.' if not state.inputs.hasOwnProperty('stats') or state.inputs.stats.length is 0 or not _.reduce(state.inputs.stats, ((memo, value) -> memo or value), false)
@@ -98,7 +100,7 @@ class OptimizationForm extends React.Component
 										<FormInputNumber label="Healing before going down" onChange={@onFieldChange.bind this, 'healing'} name="healing" error={if @state.errors.hasOwnProperty('healing') then @state.errors.healing else ''} />
 									</div>
 									<div className="col-md-4">
-										<FormInputSelect options={@state.options.weapon or {}} label="Weapon" onChange={@onFieldChange.bind this, 'weapon'} name="weapon" error={if @state.errors.hasOwnProperty('weapon') then @state.errors.weapon else ''} />
+										<FormInputSelect options={@state.options.num_weapons or {}} label="Weapon" onChange={@onFieldChange.bind this, 'num_weapons'} name="num_weapons" error={if @state.errors.hasOwnProperty('num_weapons') then @state.errors.num_weapons else ''} />
 									</div>
 									<div className="col-md-4">
 										<FormInputSelect options={@state.options.defensive_category or {}} label="Defensive Category" onChange={@onFieldChange.bind this, 'defensive_category'} name="defensive_category" error={if @state.errors.hasOwnProperty('defensive_category') then @state.errors.defensive_category else ''} />
@@ -128,6 +130,62 @@ class OptimizationForm extends React.Component
 										<FormInputSelect options={@state.options.armour or {}} label="Specific Chest" onChange={@onFieldChange.bind this, 'chest'} name="chest" />
 									</div>
 								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Gloves" onChange={@onFieldChange.bind this, 'gloves'} name="gloves" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Leggings" onChange={@onFieldChange.bind this, 'leggings'} name="leggings" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Boots" onChange={@onFieldChange.bind this, 'boots'} name="boots" />
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.back or {}} label="Specific Back" onChange={@onFieldChange.bind this, 'back'} name="back" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.accessory or {}} label="Specific Accessory 1" onChange={@onFieldChange.bind this, 'accessory1'} name="accessory1" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.accessory or {}} label="Specific Accessory 2" onChange={@onFieldChange.bind this, 'accessory2'} name="accessory2" />
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.amulet or {}} label="Specific Amulet" onChange={@onFieldChange.bind this, 'amulet'} name="amulet" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.ring or {}} label="Specific Ring 1" onChange={@onFieldChange.bind this, 'ring1'} name="ring1" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.ring or {}} label="Specific Ring 2" onChange={@onFieldChange.bind this, 'ring2'} name="ring2" />
+									</div>
+								</div>
+								{
+									if @state.inputs.num_weapons is '2'
+										<div className="row">
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific One Hand Weapon 1" onChange={@onFieldChange.bind this, 'weapon1'} name="weapon1" />
+											</div>
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific One Hand Weapon 2" onChange={@onFieldChange.bind this, 'weapon2'} name="weapon2" />
+											</div>
+											<div className="col-md-4">
+												&nbsp;
+											</div>
+										</div>
+									else if @state.inputs.num_weapons is '1'
+										<div className="row">
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific Two Hand Weapon" onChange={@onFieldChange.bind this, 'weapon1'} name="weapon1" />
+											</div>
+											<div className="col-md-8">
+												&nbsp;
+											</div>
+										</div>
+								}
 							</form>
 						</div>
 						<div className="panel-footer">
