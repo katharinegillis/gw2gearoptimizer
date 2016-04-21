@@ -1,9 +1,0 @@
-# @file
-# @author Katharine Cordes
-# @date   1/23/16
-# @brief  Handles the optimization form data.
-
-AppDispatcher             = require '../dispatcher/AppDispatcher.coffee'
-EventEmitter              = require('events').EventEmitter
-assign                    = require 'object-assign'
-OptimizationFormConstants = require '../constants/OptimizationFormConstants.coffee'

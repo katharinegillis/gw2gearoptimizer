@@ -9,46 +9,56 @@ FormInputNumber         = require '../shared/Forms/FormInputNumber.cjsx'
 FormInputMultiCheckbox  = require '../shared/Forms/FormInputMultiCheckbox.cjsx'
 OptimizationFormActions = require '../../actions/OptimizationFormActions.coffee'
 OptimizationFormStore   = require '../../stores/OptimizationFormStore.coffee'
+ResultStore             = require '../../stores/ResultStore.coffee'
 Result                  = require './Result.cjsx'
 _                       = require 'underscore'
-$                       = require 'jquery'
 
-getResultState = () ->
-	result: OptimizationFormStore.getResult()
+getFormState = () ->
 	processing: false
+	options: OptimizationFormStore.getOptions()
 
 class OptimizationForm extends React.Component
 	constructor: (props) ->
 		super props
 		@state =
 			inputs: {}
-			result: {}
 			errors: {}
+			options: {}
 			processing: false
 
-	componentDidMount: ->
-		OptimizationFormStore.addChangeListener @onChange
-
-	componentWillUnmount: ->
-		OptimizationFormStore.removeChangeListener @onChange
-
 	onFieldChange: (field, event) ->
+		console.log field
+		console.log event.target.value
 		newState = @state
 		newState.inputs[field] = event.target.value
-		@setState newState
+		@setState newState, () ->
+			if (field is 'gear_level' or field is 'stats') and newState.inputs.gear_level isnt undefined and newState.inputs.gear_level isnt null and newState.inputs.gear_level isnt ''
+				selected_options = []
+				for stat, value of newState.inputs.stats
+					selected_options.push stat if value
+				OptimizationFormActions.narrowOptions newState.inputs.gear_level, selected_options
+
+	componentDidMount: ->
+		ResultStore.addChangeListener @onChange
+		OptimizationFormStore.addChangeListener @onChange
+		OptimizationFormActions.getOptions()
+
+	componentWillUnmount: ->
+		ResultStore.removeChangeListener @onChange
+		OptimizationFormStore.removeChangeListener @onChange
 
 	onChange: =>
-		@setState getResultState(), () ->
-			params =
-				scrollTop: $('.result').offset().top
-			$('html, body').animate params, 1000
+		newState = getFormState()
+		newState.inputs = @state.inputs
+		for field, value of newState.inputs
+			newState.inputs[field] = '' if typeof value is 'string' and newState.options.hasOwnProperty(field) and not newState.options[field].hasOwnProperty(value)
+		@setState newState
 
 	onClick: =>
 		if @isValid()
 			OptimizationFormActions.optimize @state.inputs
 			state = @state
 			state.processing = true
-			state.result = {}
 			@setState state
 
 	isValid: =>
@@ -57,7 +67,7 @@ class OptimizationForm extends React.Component
 		errors.profession = 'Profession is required.' if not state.inputs.hasOwnProperty('profession') or state.inputs.profession is null or state.inputs.profession is ''
 		errors.healing = 'Healing before going down is required.' if not state.inputs.hasOwnProperty('healing') or state.inputs.healing is null or state.inputs.healing is ''
 		errors.primary_stat = 'Primary Stat is required.' if not state.inputs.hasOwnProperty('primary_stat') or state.inputs.primary_stat is null or state.inputs.primary_stat is ''
-		errors.weapon = 'Weapon is required.' if not state.inputs.hasOwnProperty('weapon') or state.inputs.weapon is null or state.inputs.weapon is ''
+		errors.num_weapons = 'Weapon is required.' if not state.inputs.hasOwnProperty('num_weapons') or state.inputs.num_weapons is null or state.inputs.num_weapons is ''
 		errors.defensive_category = 'Defensive Category is required.' if not state.inputs.hasOwnProperty('defensive_category') or state.inputs.defensive_category is null or state.inputs.defensive_category is ''
 		errors.gear_for = 'Gear For is required.' if not state.inputs.hasOwnProperty('gear_for') or state.inputs.gear_for is null or state.inputs.gear_for is ''
 		errors.stats = 'Pick at least one stat combination.' if not state.inputs.hasOwnProperty('stats') or state.inputs.stats.length is 0 or not _.reduce(state.inputs.stats, ((memo, value) -> memo or value), false)
@@ -68,86 +78,6 @@ class OptimizationForm extends React.Component
 		Object.keys(errors).length is 0
 
 	render: ->
-		profession_options =
-			elementalist: 'Elementalist'
-			engineer: 'Engineer'
-			guardian: 'Guardian'
-			mesmer: 'Mesmer'
-			necromancer: 'Necromancer'
-			ranger: 'Ranger'
-			revenant: 'Revenant'
-			thief: 'Thief'
-			warrior: 'Warrior'
-
-		primary_stat_options =
-			power: 'Power'
-			ferocity: 'Ferocity'
-			condition_damage: 'Condition Damage'
-			precision: 'Precision'
-			healing_power: 'Healing Power'
-			concentration: 'Concentration'
-			expertise: 'Expertise'
-
-		secondary_stat_options =
-			power: 'Power'
-			ferocity: 'Ferocity'
-			condition_damage: 'Condition Damage'
-			precision: 'Precision'
-			healing_power: 'Healing Power'
-			concentration: 'Concentration'
-			expertise: 'Expertise'
-
-		weapon_options =
-			1: "Two-handed weapon"
-			2: "Main-hand and Off-hand weapons"
-
-		defensive_category_options =
-			break_on_touch: 'Break On Touch'
-			fragile: 'Fragile'
-			middle_ground: 'Middle Ground'
-			durable: 'Durable'
-			tanky: 'Tanky'
-			built_to_last: 'Built To Last'
-			moving_fortress: 'Moving Fortress'
-
-		gear_for_options =
-			core: 'Central Tyria'
-			hot: 'Heart of Thorns'
-
-		stat_options =
-			berserker: 'Berserker (power, precision, ferocity)'
-			zealot: 'Zealot (power, precision, healing power)'
-			soldier: 'Soldier (power, toughness, vitality)'
-			captain: 'Captain (power, precision, toughness)'
-			valkyrie: 'Valkyrie (power, vitality, ferocity)'
-			rampager: 'Rampager (precision, power, condition damage)'
-			assassin: 'Assassin (precision, power, ferocity)'
-			knight: 'Knight (toughness, power, precision)'
-			cavalier: 'Cavalier (toughness, power, ferocity)'
-			nomad: 'Nomad (toughness, vitality, healing power)'
-			settler: 'Settler (toughness, condition damage, healing power)'
-			sentinel: 'Sentinel (vitality, power, toughness)'
-			shaman: 'Shaman (vitality, condition damage, healing power)'
-			sinister: 'Sinister (condition damage, power, precision)'
-			carrion: 'Carrion (condition damage, power, vitality)'
-			rabid: 'Rabid (condition damage, precision, toughness)'
-			dire: 'Dire (condition damage, toughness, vitality)'
-			cleric: 'Cleric (healing power, power, toughness)'
-			magi: 'Magi (healing power, precision, vitality)'
-			apothecary: 'Apothecary (healing power, toughness, condition damage)'
-			commander: 'Commander (power, precision, toughness, concentration)'
-			marauder: 'Marauder (power, precision, vitality, ferocity)'
-			vigilant: 'Vigilant (power, toughness, concentration, expertise)'
-			crusader: 'Crusader (power, toughness, ferocity, healing power)'
-			wanderer: 'Wanderer (power, vitality, toughness, concentration)'
-			viper: 'Viper (power, condition damage, precision, expertise)'
-			trailblazer: 'Trailblazer (toughness, condition damage, vitality, expertise)'
-			minstrel: 'Minstrel (toughness, healing power, vitality, concentration)'
-
-		gear_level_options =
-			ascended: 'Ascended'
-			exotic: 'Exotic'
-
 		<div>
 			<div className="row">
 				<div className="col-md-12">
@@ -156,13 +86,13 @@ class OptimizationForm extends React.Component
 							<form>
 								<div className="row">
 									<div className="col-md-4">
-										<FormInputSelect options={profession_options} label="Profession" onChange={@onFieldChange.bind this, 'profession'} name="profession" error={if @state.errors.hasOwnProperty('profession') then @state.errors.profession else ''} />
+										<FormInputSelect options={@state.options.profession or {}} label="Profession" onChange={@onFieldChange.bind this, 'profession'} name="profession" error={if @state.errors.hasOwnProperty('profession') then @state.errors.profession else ''} />
 									</div>
 									<div className="col-md-4">
-										<FormInputSelect options={primary_stat_options} label="Primary Stat" onChange={@onFieldChange.bind this, 'primary_stat'} name="primary_stat" error={if @state.errors.hasOwnProperty('primary_stat') then @state.errors.primary_stat else ''} />
+										<FormInputSelect options={@state.options.primary_stat or {}} label="Primary Stat" onChange={@onFieldChange.bind this, 'primary_stat'} name="primary_stat" error={if @state.errors.hasOwnProperty('primary_stat') then @state.errors.primary_stat else ''} />
 									</div>
 									<div className="col-md-4">
-										<FormInputSelect options={secondary_stat_options} label="Secondary Stat" onChange={@onFieldChange.bind this, 'secondary_stat'} name="secondary_stat" />
+										<FormInputSelect options={@state.options.secondary_stat or {}} label="Secondary Stat" onChange={@onFieldChange.bind this, 'secondary_stat'} name="secondary_stat" />
 									</div>
 								</div>
 								<div className="row">
@@ -170,25 +100,92 @@ class OptimizationForm extends React.Component
 										<FormInputNumber label="Healing before going down" onChange={@onFieldChange.bind this, 'healing'} name="healing" error={if @state.errors.hasOwnProperty('healing') then @state.errors.healing else ''} />
 									</div>
 									<div className="col-md-4">
-										<FormInputSelect options={weapon_options} label="Weapon" onChange={@onFieldChange.bind this, 'weapon'} name="weapon" error={if @state.errors.hasOwnProperty('weapon') then @state.errors.weapon else ''} />
+										<FormInputSelect options={@state.options.num_weapons or {}} label="Weapon" onChange={@onFieldChange.bind this, 'num_weapons'} name="num_weapons" error={if @state.errors.hasOwnProperty('num_weapons') then @state.errors.num_weapons else ''} />
 									</div>
 									<div className="col-md-4">
-										<FormInputSelect options={defensive_category_options} label="Defensive Category" onChange={@onFieldChange.bind this, 'defensive_category'} name="defensive_category" error={if @state.errors.hasOwnProperty('defensive_category') then @state.errors.defensive_category else ''} />
+										<FormInputSelect options={@state.options.defensive_category or {}} label="Defensive Category" onChange={@onFieldChange.bind this, 'defensive_category'} name="defensive_category" error={if @state.errors.hasOwnProperty('defensive_category') then @state.errors.defensive_category else ''} />
 									</div>
 								</div>
 								<div className="row">
 									<div className="col-md-4">
-										<FormInputSelect options={gear_for_options} label="Gear For" onChange={@onFieldChange.bind this, 'gear_for'} name="gear_for" error={if @state.errors.hasOwnProperty('gear_for') then @state.errors.gear_for else ''} />
+										<FormInputSelect options={@state.options.gear_for or {}} label="Gear For" onChange={@onFieldChange.bind this, 'gear_for'} name="gear_for" error={if @state.errors.hasOwnProperty('gear_for') then @state.errors.gear_for else ''} />
 									</div>
 									<div className="col-md-8">
-										<FormInputSelect options={gear_level_options} label="Gear Level" onChange={@onFieldChange.bind this, 'gear_level'} name="gear_level" error={if @state.errors.hasOwnProperty('gear_level') then @state.errors.gear_level else ''} />
+										<FormInputSelect options={@state.options.gear_level or {}} label="Gear Level" onChange={@onFieldChange.bind this, 'gear_level'} name="gear_level" error={if @state.errors.hasOwnProperty('gear_level') then @state.errors.gear_level else ''} />
 									</div>
 								</div>
 								<div className="row">
 									<div className="col-md-12">
-										<FormInputMultiCheckbox options={stat_options} label="Include the following stat combinations:" columns=2 onChange={@onFieldChange.bind this, 'stats'} name="stats" error={if @state.errors.hasOwnProperty('stats') then @state.errors.stats else ''}  />
+										<FormInputMultiCheckbox options={@state.options.stat or {}} label="Include the following stat combinations:" columns=2 onChange={@onFieldChange.bind this, 'stats'} name="stats" error={if @state.errors.hasOwnProperty('stats') then @state.errors.stats else ''}  />
 									</div>
 								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Headgear" onChange={@onFieldChange.bind this, 'headgear'} name="headgear" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Shoulders" onChange={@onFieldChange.bind this, 'shoulders'} name="shoulders" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Chest" onChange={@onFieldChange.bind this, 'chest'} name="chest" />
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Gloves" onChange={@onFieldChange.bind this, 'gloves'} name="gloves" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Leggings" onChange={@onFieldChange.bind this, 'leggings'} name="leggings" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.armour or {}} label="Specific Boots" onChange={@onFieldChange.bind this, 'boots'} name="boots" />
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.back or {}} label="Specific Back" onChange={@onFieldChange.bind this, 'back'} name="back" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.accessory or {}} label="Specific Accessory 1" onChange={@onFieldChange.bind this, 'accessory1'} name="accessory1" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.accessory or {}} label="Specific Accessory 2" onChange={@onFieldChange.bind this, 'accessory2'} name="accessory2" />
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.amulet or {}} label="Specific Amulet" onChange={@onFieldChange.bind this, 'amulet'} name="amulet" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.ring or {}} label="Specific Ring 1" onChange={@onFieldChange.bind this, 'ring1'} name="ring1" />
+									</div>
+									<div className="col-md-4">
+										<FormInputSelect options={@state.options.ring or {}} label="Specific Ring 2" onChange={@onFieldChange.bind this, 'ring2'} name="ring2" />
+									</div>
+								</div>
+								{
+									if @state.inputs.num_weapons is '2'
+										<div className="row">
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific One Hand Weapon 1" onChange={@onFieldChange.bind this, 'weapon1'} name="weapon1" />
+											</div>
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific One Hand Weapon 2" onChange={@onFieldChange.bind this, 'weapon2'} name="weapon2" />
+											</div>
+											<div className="col-md-4">
+												&nbsp;
+											</div>
+										</div>
+									else if @state.inputs.num_weapons is '1'
+										<div className="row">
+											<div className="col-md-4">
+												<FormInputSelect options={@state.options.weapon or {}} label="Specific Two Hand Weapon" onChange={@onFieldChange.bind this, 'weapon1'} name="weapon1" />
+											</div>
+											<div className="col-md-8">
+												&nbsp;
+											</div>
+										</div>
+								}
 							</form>
 						</div>
 						<div className="panel-footer">
@@ -203,11 +200,6 @@ class OptimizationForm extends React.Component
 							<div className="clearfix"></div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div className="row">
-				<div className="col-md-12">
-					<Result result={@state.result} />
 				</div>
 			</div>
 		</div>

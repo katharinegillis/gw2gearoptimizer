@@ -6,18 +6,35 @@
 AppDispatcher                 = require '../dispatcher/AppDispatcher.coffee'
 OptimizationFormConstants     = require '../constants/OptimizationFormConstants.coffee'
 CalculationAPI                = require '../api/CalculationAPI.coffee'
-Promise                       = require 'bluebird'
+ResultServerActions           = require './ResultServerActions.coffee'
 OptimizationFormServerActions = require './OptimizationFormServerActions.coffee'
-
-Promise.promisifyAll CalculationAPI
+StatAPI                       = require '../api/StatAPI.coffee'
 
 OptimizationFormActions =
 	optimize: (params) ->
+		console.log params
 		AppDispatcher.dispatch action_type: OptimizationFormConstants.OPTIMIZE
-		CalculationAPI.calculateAsync params
-			.then (result) ->
-				OptimizationFormServerActions.receiveOptimizeResult result
-			.catch (error) ->
+		CalculationAPI.calculate params, (error, result) ->
+			if error isnt undefined and error isnt null and error isnt ''
 				console.log error
+				return
+
+			ResultServerActions.receiveResult result
+
+	getOptions: () ->
+		AppDispatcher.dispatch action_type: OptimizationFormConstants.GET_OPTIONS
+		StatAPI.availableCombos (error, result) ->
+			if error isnt undefined and error isnt null and error isnt ''
+				console.log error
+				return
+
+			OptimizationFormServerActions.receiveOptions result
+
+	narrowOptions: (gear_level, selected_options) ->
+		console.log 'narrowOptions'
+		AppDispatcher.dispatch
+			action_type: OptimizationFormConstants.NARROW_OPTIONS
+			gear_level: gear_level
+			selected_options: selected_options
 
 module.exports = OptimizationFormActions

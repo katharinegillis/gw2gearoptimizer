@@ -19,3 +19,7 @@ webapp/public/js/*
 # Log files
 *.log
 npm-debug.log.*
+
+.ctagsignore
+.tags
+.tags_sorted_by_file

@@ -3,8 +3,8 @@
 # @date   1/23/16
 # @brief  Defines action constants for the Optimization Form store.
 
-keymirror = require 'keymirror'
-
-module.exports = keymirror
-	OPTIMIZE: null
-	RECEIVE_OPTIMIZE_RESULT: null
+module.exports =
+	OPTIMIZE: 'OPTIMIZE'
+	GET_OPTIONS: 'GET_OPTIONS'
+	RECEIVE_OPTIONS: 'RECEIVE_OPTIONS'
+	NARROW_OPTIONS: 'NARROW_OPTIONS'
