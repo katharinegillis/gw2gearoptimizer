@@ -1,24 +1,19 @@
-Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+Vagrant.require_version ">= 1.6.0"
+VAGRANTFILE_API_VERSION = "2"
 
-  config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-  end
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	config.vm.box = "bento/ubuntu-14.04"
 
-  # Networking and hostname
-  config.vm.network "private_network", ip: "192.168.33.18"
-  config.vm.hostname = "localdev.gw2gearopt.tichi.org"
+	config.vm.network "private_network", ip: "192.168.33.10"
+	config.vm.hostname = "localdev.gw2gearopt.tichi.org"
 
-  # Set up the shared web folder.
-  config.vm.synced_folder "webapp/", "/home/vagrant/webapp/", create: true
+	config.vm.synced_folder "nodejs/", "/home/vagrant/gitrepo/nodejs", create: true, nfs: true
 
-  # Set up salt.
-  config.vm.synced_folder "salt/", "/srv/salt"
-
-  # Do the provisioning.
-  config.vm.provision :salt do |salt|
-    salt.minion_config = "salt/minion"
-    salt.run_highstate = true
-    salt.bootstrap_options = "-F -c /tmp"
-  end
+	if not Vagrant::Util::Platform.windows?
+		config.vm.provision "ansible" do |ansible|
+			ansible.playbook = "ansible/playbook.yml"
+			ansible.inventory_path = "ansible/inventories/vagrant"
+			ansible.limit = "all"
+		end
+	end
 end
