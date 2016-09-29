@@ -6,4 +6,28 @@
     state: present
   become: true
 
-- name:
+- name: add the nginx repository
+  apt_repository:
+    repo: "ppa:nginx/stable"
+  register: nginxrepo
+  become: true
+
+- name: update apt-get
+  apt:
+    update_cache: yes
+  when: nginxrepo.changed
+  become: true
+
+- name: install nginx
+  apt:
+    name: nginx
+    state: latest
+  become: true
+
+- name: update nginx.conf
+  template:
+    src: nginx/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  become: true
+  notify:
+    - restart nginx
