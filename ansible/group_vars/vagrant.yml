@@ -1,7 +1,8 @@
 ---
-app_user_name: "gw2gearopt"
-app_user_group: "gw2gearopt"
+app_user_name: "vagrant"
+app_user_group: "vagrant"
 app_server_name: "localdev.gw2gearopt.tichi.org"
+app_deploy_path: "/home/{{ app_user_name }}/gitrepo"
 
 forever_version: "0.15.2"
 

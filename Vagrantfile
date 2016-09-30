@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.network "private_network", ip: "192.168.33.10"
 	config.vm.hostname = "localdev.gw2gearopt.tichi.org"
 
-	config.vm.synced_folder "app/", "/home/gw2gearopt/gitrepo/app", create: true, nfs: true
+	config.vm.synced_folder "app/", "/home/vagrant/gitrepo/app", create: true, nfs: true
 
 	if not Vagrant::Util::Platform.windows?
 		config.vm.provision "ansible" do |ansible|

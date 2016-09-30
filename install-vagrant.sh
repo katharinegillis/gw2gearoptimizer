@@ -1,3 +1,3 @@
-#!bin/bash
+#!/bin/sh
 
-ansible-playbook ansible/install.yml -i ansible/inventories/vagrant --ask-sudo-pass
+ansible-playbook ansible/install.yml -i ansible/inventories/vagrant --become

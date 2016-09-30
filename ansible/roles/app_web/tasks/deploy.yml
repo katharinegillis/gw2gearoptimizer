@@ -11,11 +11,6 @@
     state: present
   become: true
 
-- name: install acl
-  package:
-    name: acl
-  become: true
-
 - name: check ssh directory
   file:
     path: "/home/{{ app_user_name }}/.ssh"

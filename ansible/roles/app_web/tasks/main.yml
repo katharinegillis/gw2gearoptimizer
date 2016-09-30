@@ -7,11 +7,11 @@
     - deploy
     - deploy:check
 
-#- include: deploy.yml
-#  when: app_deploy is defined and app_deploy is true
-#  tags:
-#    - app_web
-#    - deploy
+- include: deploy.yml
+  when: app_deploy is defined and app_deploy == true
+  tags:
+    - app_web
+    - deploy
 
 - include: app_web.yml
   tags:

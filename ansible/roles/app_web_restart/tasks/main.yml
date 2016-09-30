@@ -1,0 +1,12 @@
+---
+- include: check_vars.yml
+  tags:
+    - check
+    - restart:check
+    - app_web_restart
+    - app_web_restart:check
+
+- include: app_web_restart.yml
+  tags:
+    - restart
+    - app_web_restart

@@ -1,0 +1,5 @@
+---
+- name: restart app
+  command: forever restartall
+  become: true
+  become_user: "{{ app_user_name }}"
