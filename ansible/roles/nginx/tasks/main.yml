@@ -1,0 +1,13 @@
+---
+- include: check_vars.yml
+  tags:
+    - nginx
+    - nginx:check
+    - check
+    - provision
+    - provision:check
+
+- include: nginx.yml
+  tags:
+    - nginx
+    - provision

@@ -1,0 +1,67 @@
+---
+- name: install git
+  package:
+    name: git
+  become: true
+
+- name: create app system user
+  user:
+    name: "{{ app_user_name }}"
+    system: yes
+    state: present
+  become: true
+
+- name: install acl
+  package:
+    name: acl
+  become: true
+
+- name: check ssh directory
+  file:
+    path: "/home/{{ app_user_name }}/.ssh"
+    state: directory
+    mode: "0700"
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: add deploy key to app user
+  copy:
+    content: "{{ app_deploy_key }}"
+    dest: "/home/{{ app_user_name }}/.ssh/github_deploy"
+    mode: "0600"
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: update ssh config
+  blockinfile:
+    dest: "/home/{{ app_user_name}}/.ssh/config"
+    create: yes
+    block: |
+      Host github.com
+        HostName github.com
+        User katharinegillis
+        IdentityFile ~/.ssh/github_deploy
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: create repository folder with group permissions
+  file:
+    path: "{{ app_deploy_path }}"
+    state: directory
+    mode: "2775"
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: clone repository
+  git:
+    repo: "{{ app_deploy_repo }}"
+    dest: "{{ app_deploy_path }}"
+    version: "{{ app_deploy_branch }}"
+    accept_hostkey: true
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: set git repository to shared=group
+  command: git init --shared=group chdir={{ app_deploy_path}}
+  become: true
+  become_user: "{{ app_user_name }}"

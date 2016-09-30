@@ -1,0 +1,13 @@
+---
+- include: check_vars.yml
+  tags:
+    - check
+    - mongodb
+    - mongodb:check
+    - provision
+    - provision:check
+
+- include: mongodb.yml
+  tags:
+    - mongodb
+    - provision

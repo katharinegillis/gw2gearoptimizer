@@ -1,0 +1,3 @@
+---
+mongodb_version: "*"
+mongodb_repo_version: "3.2"

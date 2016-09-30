@@ -1,0 +1,14 @@
+---
+- name: create user to run forever
+  user:
+    name: forever
+    system: yes
+    state: present
+  become: true
+
+- name: install forever
+  npm:
+    name: forever
+    version: "{{ forever_version }}"
+    global: yes
+  become: true

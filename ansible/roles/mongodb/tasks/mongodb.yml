@@ -1,0 +1,33 @@
+---
+# This installation creates a user mongodb to run as.
+
+- name: install mongodb repository key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: EA312927
+  become: true
+
+- name: add mongodb repository list
+  apt_repository:
+    repo: "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/{{ mongodb_repo_version}} multiverse"
+    state: present
+    filename: "mongodb-org-{{ mongodb_repo_version}}"
+  register: mongodbrepo
+  become: true
+
+- name: update apt-get
+  apt:
+    update_cache: yes
+  when: mongodbrepo.changed
+  become: true
+
+- name: install mongodb
+  package:
+    name: "{{ item }}"
+  with_items:
+    - "mongodb-org={{ mongodb_version }}"
+    - "mongodb-org-server={{ mongodb_version }}"
+    - "mongodb-org-shell={{ mongodb_version }}"
+    - "mongodb-org-mongos={{ mongodb_version }}"
+    - "mongodb-org-tools={{ mongodb_version }}"
+  become: true

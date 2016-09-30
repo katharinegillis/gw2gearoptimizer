@@ -1,0 +1,8 @@
+---
+- name: check required variables are set
+  fail:
+    msg: "{{ item }} is not defined"
+  when: item not in hostvars[inventory_hostname]
+  with_items:
+    - mongodb_version
+    - mongodb_repo_version
