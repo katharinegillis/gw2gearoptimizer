@@ -1,0 +1,19 @@
+---
+- name: check required variables are set
+  fail:
+    msg: "{{ item }} is not defined"
+  when: item not in hostvars[inventory_hostname]
+  with_items:
+    - app_user_name
+    - app_user_group
+    - app_server_name
+    - app_deploy_path
+
+- name: check required variables for deployment
+  fail:
+    msg: "{{ item }} is not defined"
+  when: app_deploy is defined and app_deploy == true and item not in hostvars[inventory_hostname]
+  with_items:
+    - app_deploy_key
+    - app_deploy_repo
+    - app_deploy_branch

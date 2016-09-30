@@ -1,0 +1,5 @@
+---
+app_user_name: "webapp"
+app_user_group: "webapp"
+app_server_name: "localhost"
+app_deploy_path: "/home/{{ app_user_name }}"

@@ -1,0 +1,10 @@
+---
+# Provision
+- include: nginx.yml
+- include: nodejs.yml
+- include: forever.yml
+- include: mongodb.yml
+
+# Deploy
+- include: acl.yml
+- include: app_web.yml

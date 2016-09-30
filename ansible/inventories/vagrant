@@ -2,7 +2,7 @@
 ; Vagrant setup with a single server
 
 ; server
-localdev ansible_host=192.168.33.10 ansible_user=vagrant ansible_private_key_file=.vagrant/machines/default/virtualbox/private_key
+localdev ansible_host=gw2gearoptimizer-vagrant
 
 [web]
 localdev

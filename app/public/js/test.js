@@ -1,0 +1,1 @@
+// Test js file to show nginx is running static files.

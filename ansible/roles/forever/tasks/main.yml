@@ -1,0 +1,13 @@
+---
+- include: check_vars.yml
+  tags:
+    - forever
+    - forever:check
+    - check
+    - provision
+    - provision:check
+
+- include: forever.yml
+  tags:
+    - forever
+    - provision

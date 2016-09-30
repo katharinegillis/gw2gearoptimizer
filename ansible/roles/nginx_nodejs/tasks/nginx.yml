@@ -1,9 +1,0 @@
----
-- name: create nginx user
-  user:
-    name: "nginx"
-    system: yes
-    state: present
-  become: true
-
-- name:

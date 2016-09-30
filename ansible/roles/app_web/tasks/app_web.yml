@@ -1,0 +1,30 @@
+---
+- name: add site config to nginx
+  template:
+    src: "nginx/site.j2"
+    dest: "/etc/nginx/sites-available/{{ app_server_name }}"
+  become: true
+  notify:
+      - restart nginx
+
+- name: enable site config
+  file:
+    src: "/etc/nginx/sites-available/{{ app_server_name }}"
+    dest: "/etc/nginx/sites-enabled/{{ app_server_name }}"
+    state: link
+  become: true
+  notify:
+    - restart nginx
+
+- name: start nodejs server
+  command: "forever start {{ app_deploy_path }}/app/server/main.js"
+  become: true
+  become_user: "{{ app_user_name }}"
+
+- name: start nodejs server on reboot
+  cron:
+    name: "start {{ app_deploy_path }} nodejs server"
+    job: "sleep 30; /usr/local/bin/n use 6.7.0 /usr/local/bin/forever start {{ app_deploy_path }}/app/server/main.js"
+    special_time: "reboot"
+    user: "{{ app_user_name }}"
+  become: true

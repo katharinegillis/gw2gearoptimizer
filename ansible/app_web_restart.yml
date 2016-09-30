@@ -1,0 +1,4 @@
+---
+- hosts: web
+  roles:
+    - app_web_restart

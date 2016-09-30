@@ -1,0 +1,31 @@
+---
+- name: install nodejs
+  package:
+    name: "{{ item }}"
+  with_items:
+    - nodejs
+    - npm
+  become: true
+
+- name: install nodejs n
+  npm:
+    name: n
+    global: yes
+  become: true
+
+- name: upgrade nodejs using n
+  command: "n {{ nodejs_version }}"
+  become: true
+
+- name: remove original nodejs package
+  package:
+    name: nodejs
+    state: absent
+  become: true
+
+- name: upgrade npm
+  npm:
+    name: npm
+    version: "{{ npm_version }}"
+    global: yes
+  become: true
