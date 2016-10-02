@@ -4,4 +4,6 @@
 # Vagrant
 .vagrant
 
+# NodeJS/NPM
 app/node_modules/*
+npm-debug.log

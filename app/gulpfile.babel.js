@@ -1,18 +1,24 @@
 'use strict';
 
-import gulp from 'gulp';
+import * as gulp from 'gulp';
 import { exec } from 'child_process';
-import watch from 'gulp-watch';
+import * as watch from 'gulp-watch';
 
-gulp.task('server:restart', (callback) => {
+let server_restart = () => {
+	console.log('Restarting server...');
+	exec('ansible-playbook -i ../ansible/inventories/vagrant ../ansible/app_web_restart.yml --become', (err, stdout, stderr) => {
+		console.log('Server restarted.');
+	});
+};
 
+gulp.task('watch:win', () => {
+	return watch('server/**/*.js', { usePolling: true }, () => {
+		server_restart();
+	});
 });
 
 gulp.task('watch', () => {
-	return watch('server/**/*.js', { usePolling: true }, () => {
-		console.log('Restarting server...');
-		exec('ansible-playbook -i ../ansible/inventories/vagrant ../ansible/app_web_restart.yml --become', (err, stdout, stderr) => {
-			console.log('Server restarted.');
-		});
+	return watch('server/**/*.js', () => {
+		server_restart();
 	});
 });
