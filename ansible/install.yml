@@ -7,4 +7,5 @@
 
 # Deploy
 - include: acl.yml
+- include: app_deploy.yml
 - include: app_web.yml

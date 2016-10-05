@@ -2,7 +2,7 @@
 ; Vagrant setup with a single server
 
 ; server
-localdev ansible_host=gw2gearoptimizer-vagrant
+localdev ansible_host=192.168.33.10 ansible_user=vagrant ansible_password=vagrant
 
 [web]
 localdev
@@ -10,6 +10,15 @@ localdev
 [db]
 localdev
 
+;[deploy]
+;localdev
+
 [vagrant:children]
 web
 db
+;deploy
+
+[project:children]
+web
+db
+;deploy

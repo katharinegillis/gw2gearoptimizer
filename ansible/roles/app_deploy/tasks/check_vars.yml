@@ -7,3 +7,6 @@
     - app_user_name
     - app_server_name
     - app_deploy_path
+    - app_deploy_key
+    - app_deploy_repo
+    - app_deploy_branch

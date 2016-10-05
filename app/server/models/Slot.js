@@ -5,7 +5,7 @@
  */
 
 class Slot {
-	constructor(type) {
+	constructor(gear_type, data = null) {
 		throw new Error('Not implemented yet.');
 		this.available_stat_combos = [
 			'berserker',
@@ -43,6 +43,26 @@ class Slot {
 	}
 
 	static ASCENDED() {
+		throw new Error('Not implemented yet.');
+	}
+
+	get availableStatCombos() {
+		throw new Error('Not implemented yet.');
+	}
+
+	get slotStatCombos() {
+		throw new Error('Not implemented yet.');
+	}
+
+	get gearType() {
+		throw new Error('Not implemented yet.');
+	}
+
+	get data() {
+		throw new Error('Not implemented yet.');
+	}
+
+	getStatComboName() {
 		throw new Error('Not implemented yet.');
 	}
 }

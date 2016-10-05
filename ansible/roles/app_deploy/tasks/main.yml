@@ -7,7 +7,7 @@
     - deploy
     - deploy:check
 
-- include: app_web.yml
+- include: app_deploy.yml
   tags:
-    - app_web
+    - app_deploy
     - deploy

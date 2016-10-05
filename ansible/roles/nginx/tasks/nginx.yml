@@ -18,6 +18,11 @@
   when: nginxrepo.changed
   become: true
 
+- name: update apt-key
+  command: apt-key update
+  become: true
+  when: nginxrepo.changed
+
 - name: install nginx
   apt:
     name: "nginx={{ nginx_version }}"

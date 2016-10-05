@@ -34,7 +34,6 @@
     block: |
       Host github.com
         HostName github.com
-        User katharinegillis
         IdentityFile ~/.ssh/github_deploy
   become: true
   become_user: "{{ app_user_name }}"
