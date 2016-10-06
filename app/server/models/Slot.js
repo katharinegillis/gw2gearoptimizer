@@ -4,10 +4,15 @@
  * @author gillis.katharine@gmail.com
  */
 
+import RandomUtil from '../utils/RandomUtil';
+
+const EXOTIC = 'exotic';
+const ASCENDED = 'ascended';
+
 class Slot {
-	constructor(gear_type, data = null) {
-		throw new Error('Not implemented yet.');
-		this.available_stat_combos = [
+	// Constructor
+	constructor(gear_type) {
+		this._availableStatCombos = [
 			'berserker',
 			'zealot',
 			'soldier',
@@ -36,34 +41,102 @@ class Slot {
 			'trailblazer',
 			'minstrel',
 		];
+		this._slotStatCombos = [
+			'berserker',
+			'zealot',
+			'soldier',
+			'valkyrie',
+			'rampager',
+			'assassin',
+			'knight',
+			'cavalier',
+			'nomad',
+			'settler',
+			'sentinel',
+			'shaman',
+			'sinister',
+			'carrion',
+			'rabid',
+			'dire',
+			'cleric',
+			'magi',
+			'apothecary',
+			'commander',
+			'marauder',
+			'vigilant',
+			'crusader',
+			'wanderer',
+			'viper',
+			'trailblazer',
+			'minstrel',
+		];
+		this._gear_type = gear_type;
 	}
 
-	static EXOTIC() {
-		throw new Error('Not implemented yet.');
+
+	// Constants
+	/**
+	 * @returns {string}
+	 */
+	static get EXOTIC() {
+		return EXOTIC;
 	}
 
-	static ASCENDED() {
-		throw new Error('Not implemented yet.');
+	/**
+	 * @returns {string}
+	 */
+	static get ASCENDED() {
+		return ASCENDED;
 	}
 
+
+	// Properties
 	get availableStatCombos() {
-		throw new Error('Not implemented yet.');
+		return this._availableStatCombos;
 	}
 
 	get slotStatCombos() {
-		throw new Error('Not implemented yet.');
+		return this._slotStatCombos;
 	}
 
 	get gearType() {
-		throw new Error('Not implemented yet.');
+		return this._gear_type;
 	}
 
 	get data() {
+		return this._data;
+	}
+
+	get statComboName() {
 		throw new Error('Not implemented yet.');
 	}
 
-	getStatComboName() {
+	get statList() {
 		throw new Error('Not implemented yet.');
+	}
+
+	get dataMaskLength() {
+		throw new Error('Not implemented yet.');
+		if (this.availableStatCombos.length == 0) {
+			return null;
+		}
+
+		return (this.availableStatCombos.length - 1).toString(2).length;
+	}
+
+	get dataMask() {
+		throw new Error('Not implemented yet.');
+	}
+
+
+	// Methods
+	setData(value) {
+		this._data = value;
+	}
+
+	randomizeData() {
+		throw new Error('Not implemented yet.');
+		this._data = Math.floor(RandomUtil.random() * this.availableStatCombos.length);
 	}
 }
 
