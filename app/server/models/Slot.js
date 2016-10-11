@@ -43,7 +43,9 @@ export default class Slot {
 			'trailblazer',
 			'minstrel',
 			'celestial',
-			'captain'
+			'captain',
+			'givers_weapon',
+			'givers_armour'
 		];
 		this._slotStatCombos = [
 			'berserker',
@@ -74,7 +76,9 @@ export default class Slot {
 			'trailblazer',
 			'minstrel',
 			'celestial',
-			'captain'
+			'captain',
+			'givers_weapon',
+			'givers_armour'
 		];
 		this._gear_type = gear_type;
 	}
@@ -304,6 +308,18 @@ export default class Slot {
 				return {
 					major: [ 'condition_damage' ],
 					minor: [ 'toughness', 'healing_power' ]
+				};
+				break;
+			case 'givers_weapon':
+				return {
+					major: [ 'expertise' ],
+					minor: [ 'precision', 'vitality' ]
+				};
+				break;
+			case 'givers_armour':
+				return {
+					major: [ 'toughness' ],
+					minor: [ 'healing_power', 'concentration' ]
 				};
 				break;
 			default:

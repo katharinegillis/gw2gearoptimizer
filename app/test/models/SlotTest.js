@@ -42,7 +42,9 @@ describe('Slot', function() {
 		'trailblazer',
 		'minstrel',
 		'celestial',
-		'captain'
+		'captain',
+		'givers_weapon',
+		'givers_armour'
 	];
 
 	describe('constructor()', function() {
@@ -393,6 +395,26 @@ describe('Slot', function() {
 				expect(subject.statList).to.deep.equal({
 					major: [ 'precision' ],
 					minor: [ 'power', 'toughness' ]
+				});
+			});
+
+			it('returns major: expertise, minor: precision and vitality for givers_weapon stat combo', function() {
+				let subject = new Slot(Slot.EXOTIC);
+				subject.setData(subject.availableStatCombos.indexOf('givers_weapon'));
+
+				expect(subject.statList).to.deep.equal({
+					major: [ 'expertise' ],
+					minor: [ 'precision', 'vitality' ]
+				});
+			});
+
+			it('returns major: toughness, minor: healing power and concentration for givers_armour stat combo', function() {
+				let subject = new Slot(Slot.EXOTIC);
+				subject.setData(subject.availableStatCombos.indexOf('givers_armour'));
+
+				expect(subject.statList).to.deep.equal({
+					major: [ 'toughness' ],
+					minor: [ 'healing_power', 'concentration' ]
 				});
 			});
 		});

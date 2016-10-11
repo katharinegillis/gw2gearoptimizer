@@ -12,7 +12,38 @@ import WeaponSlot from '../../../server/models/Slot/WeaponSlot';
 import Slot from '../../../server/models/Slot';
 
 describe('WeaponSlot', function() {
-	let weapon_stat_combos = [
+	let weapon_ascended_stat_combos = [
+		'berserker',
+		'zealot',
+		'soldier',
+		'valkyrie',
+		'rampager',
+		'assassin',
+		'knight',
+		'cavalier',
+		'nomad',
+		'settler',
+		'sentinel',
+		'shaman',
+		'sinister',
+		'carrion',
+		'rabid',
+		'dire',
+		'cleric',
+		'magi',
+		'apothecary',
+		'commander',
+		'marauder',
+		'vigilant',
+		'crusader',
+		'wanderer',
+		'viper',
+		'trailblazer',
+		'minstrel',
+		'celestial'
+	];
+
+	let weapon_exotic_stat_combos = [
 		'berserker',
 		'zealot',
 		'soldier',
@@ -41,20 +72,32 @@ describe('WeaponSlot', function() {
 		'trailblazer',
 		'minstrel',
 		'celestial',
-		'captain'
+		'givers_weapon'
 	];
 
 	describe('constructor()', function() {
-		it('sets available stat combos to weapon stat combos', function() {
-			let subject = new WeaponSlot(Slot.EXOTIC);
+		it('sets available stat combos to weapon stat combos for ascended gear type', function() {
+			let subject = new WeaponSlot(Slot.ASCENDED);
 
-			expect(subject.availableStatCombos).to.deep.equal(weapon_stat_combos);
+			expect(subject.availableStatCombos).to.deep.equal(weapon_ascended_stat_combos);
 		});
 
-		it('sets slot stat combos to weapon stat combos', function() {
+		it('sets slot stat combos to weapon stat combos for ascended gear type', function() {
+			let subject = new WeaponSlot(Slot.ASCENDED);
+
+			expect(subject.slotStatCombos).to.deep.equal(weapon_ascended_stat_combos);
+		});
+
+		it('sets available stat combos to weapon stat combos for exotic gear type', function() {
 			let subject = new WeaponSlot(Slot.EXOTIC);
 
-			expect(subject.slotStatCombos).to.deep.equal(weapon_stat_combos);
+			expect(subject.availableStatCombos).to.deep.equal(weapon_exotic_stat_combos);
+		});
+
+		it('sets slot stat combos to weapon stat combos for exotic gear type', function() {
+			let subject = new WeaponSlot(Slot.EXOTIC);
+
+			expect(subject.slotStatCombos).to.deep.equal(weapon_exotic_stat_combos);
 		});
 	});
 });

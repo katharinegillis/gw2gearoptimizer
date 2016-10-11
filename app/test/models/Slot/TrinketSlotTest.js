@@ -12,7 +12,7 @@ import TrinketSlot from '../../../server/models/Slot/TrinketSlot';
 import Slot from '../../../server/models/Slot';
 
 describe('TrinketSlot', function() {
-	let trinket_stat_combos = [
+	let trinket_ascended_stat_combos = [
 		'berserker',
 		'zealot',
 		'soldier',
@@ -42,6 +42,38 @@ describe('TrinketSlot', function() {
 		'minstrel',
 		'celestial',
 		'captain'
+	];
+
+	let trinket_exotic_stat_combos = [
+		'berserker',
+		'zealot',
+		'soldier',
+		'valkyrie',
+		'rampager',
+		'assassin',
+		'knight',
+		'cavalier',
+		'nomad',
+		'sentinel',
+		'shaman',
+		'sinister',
+		'carrion',
+		'rabid',
+		'dire',
+		'cleric',
+		'magi',
+		'apothecary',
+		'commander',
+		'marauder',
+		'vigilant',
+		'crusader',
+		'wanderer',
+		'viper',
+		'trailblazer',
+		'minstrel',
+		'celestial',
+		'captain',
+		'givers_armour'
 	];
 
 	describe('constructor()', function() {
